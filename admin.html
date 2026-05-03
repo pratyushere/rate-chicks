@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Dashboard — Smash or Pass</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="public/css/style.css" />
+  <link rel="stylesheet" href="public/css/admin.css" />
+</head>
+<body class="admin-body">
+
+  <!-- ── Login Gate ─────────────────────────────────────────────── -->
+  <div class="login-overlay" id="loginOverlay">
+    <div class="login-box">
+      <div class="login-logo">🔐</div>
+      <h1 class="login-title">Admin Access</h1>
+      <p class="login-sub">Enter the administrator password to continue.</p>
+      <form id="loginForm" onsubmit="handleLogin(event)">
+        <div class="input-group">
+          <input type="password" id="passwordInput" placeholder="Password" autocomplete="current-password" required />
+        </div>
+        <div class="login-error" id="loginError" style="display:none;"></div>
+        <button type="submit" class="btn-login">Unlock Dashboard</button>
+      </form>
+      <a href="index.html" class="back-to-app">← Back to App</a>
+    </div>
+  </div>
+
+  <!-- ── Admin Dashboard ────────────────────────────────────────── -->
+  <div class="admin-dashboard" id="adminDashboard" style="display:none;">
+
+    <!-- Header -->
+    <header class="admin-header">
+      <div class="admin-brand">
+        <span class="admin-brand-icon">⚙️</span>
+        <h1>Admin Dashboard</h1>
+      </div>
+      <div class="admin-header-right">
+        <div class="admin-stats-mini">
+          <span id="adminStatActive" class="stat-pill active-pill">— Active</span>
+          <span id="adminStatHidden" class="stat-pill hidden-pill">— Hidden</span>
+          <span id="adminStatFlagged" class="stat-pill flagged-pill" style="display:none;">— Flagged</span>
+        </div>
+        <a href="index.html" class="btn-back-app">← App</a>
+        <button class="btn-logout" onclick="handleLogout()">Logout</button>
+      </div>
+    </header>
+
+    <!-- Tabs -->
+    <nav class="admin-tabs">
+      <button class="admin-tab active" id="tab-students" onclick="switchTab('students', this)">
+        <span class="tab-icon">👥</span> Students
+      </button>
+      <button class="admin-tab" id="tab-discrepancies" onclick="switchTab('discrepancies', this)">
+        <span class="tab-icon">⚠️</span> Fix-it
+        <span class="tab-badge" id="fixitBadge" style="display:none;">0</span>
+      </button>
+    </nav>
+
+    <!-- ── STUDENTS TAB ──────────────────────────────────────────── -->
+    <div id="panelStudents" class="tab-panel active">
+      <div class="admin-controls">
+        <div class="search-bar-wrap">
+          <span class="search-icon">🔍</span>
+          <input type="text" id="searchInput" placeholder="Search student name…" oninput="handleSearch()" />
+          <button class="clear-search" id="clearSearch" onclick="clearSearch()" style="display:none;">✕</button>
+        </div>
+        <div class="filter-tabs">
+          <button class="filter-tab active" onclick="setFilter('all', this)">All</button>
+          <button class="filter-tab" onclick="setFilter('Male', this)">Boys</button>
+          <button class="filter-tab" onclick="setFilter('Female', this)">Girls</button>
+          <button class="filter-tab" onclick="setFilter('hidden', this)">Hidden</button>
+        </div>
+      </div>
+
+      <div class="admin-table-wrap">
+        <table class="admin-table" id="adminTable">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Photo</th>
+              <th>Name</th>
+              <th>Gender</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody id="adminTableBody">
+            <tr><td colspan="6" class="loading-row">Loading students…</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="admin-footer">
+        Showing <span id="showingCount">0</span> of <span id="totalCount">0</span> students
+      </div>
+    </div>
+
+    <!-- ── FIX-IT TAB ────────────────────────────────────────────── -->
+    <div id="panelDiscrepancies" class="tab-panel" style="display:none;">
+      <div class="fixitbar">
+        <div>
+          <h2 class="fixit-title">⚠️ OCR Discrepancy Report</h2>
+          <p class="fixit-sub">These students have a mismatch between the PDF table name and the name printed in their photo. Review each case and resolve it by correcting the name or uploading a new photo.</p>
+        </div>
+        <div class="fixit-filter-tabs">
+          <button class="filter-tab active" onclick="setDiscrepFilter('open', this)">Open</button>
+          <button class="filter-tab" onclick="setDiscrepFilter('resolved', this)">Resolved</button>
+          <button class="filter-tab" onclick="setDiscrepFilter('all', this)">All</button>
+        </div>
+      </div>
+
+      <div class="discrep-list" id="discrepList">
+        <div class="loading-row">Loading…</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Edit Name Modal ─────────────────────────────────────────── -->
+  <div class="modal-overlay" id="editNameModal" style="display:none;" onclick="closeEditModal(event)">
+    <div class="modal-box">
+      <h3 class="modal-title">Edit Student Name</h3>
+      <p class="modal-sub" id="editModalSub">SL#00001</p>
+      <input type="text" id="editNameInput" class="modal-input" placeholder="Enter corrected name…" />
+      <div class="modal-actions">
+        <button class="modal-btn-cancel" onclick="closeEditModal()">Cancel</button>
+        <button class="modal-btn-save" onclick="saveNameEdit()">Save Name</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Upload Photo Modal ──────────────────────────────────────── -->
+  <div class="modal-overlay" id="uploadModal" style="display:none;" onclick="closeUploadModal(event)">
+    <div class="modal-box">
+      <h3 class="modal-title">Upload Corrected Photo</h3>
+      <p class="modal-sub" id="uploadModalSub">SL#00001</p>
+      <div class="upload-drop-zone" id="uploadDropZone" onclick="document.getElementById('photoFileInput').click()">
+        <div class="upload-icon">📷</div>
+        <p class="upload-hint">Click to choose or drag & drop a photo</p>
+        <p class="upload-hint-sub">JPG, PNG — max 10MB</p>
+        <input type="file" id="photoFileInput" accept="image/*" style="display:none;" onchange="handleFileSelect(event)" />
+      </div>
+      <div class="upload-preview-wrap" id="uploadPreviewWrap" style="display:none;">
+        <img id="uploadPreviewImg" src="" alt="Preview" class="upload-preview-img" />
+        <p id="uploadPreviewName" class="upload-preview-name"></p>
+      </div>
+      <div class="modal-actions">
+        <button class="modal-btn-cancel" onclick="closeUploadModal()">Cancel</button>
+        <button class="modal-btn-save" id="uploadBtn" onclick="submitPhotoUpload()">Upload Photo</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="public/js/admin.js"></script>
+</body>
+</html>
