@@ -21,14 +21,48 @@ let uploadFile = null;
 
 // ── Auth ─────────────────────────────────────────────────────────────────
 window.addEventListener('DOMContentLoaded', () => {
-    // If not on localhost, show server-required notice and stop
+    // If not on localhost, show a fully self-contained server-required notice
     if (!IS_LOCAL) {
+        // Apply dark background directly to body so it's visible even if CSS fails to load
+        document.body.style.cssText = 'margin:0;min-height:100vh;background:#0a0a0f;display:flex;align-items:center;justify-content:center;font-family:system-ui,sans-serif;';
+        document.getElementById('loginOverlay').style.cssText = 'position:static;display:flex;align-items:center;justify-content:center;width:100%;';
         document.getElementById('loginOverlay').innerHTML = `
-          <div class="login-box" style="text-align:center;gap:1.2rem">
+          <div style="
+            text-align:center; padding:2.5rem 2rem;
+            background:#12121a; border:1px solid rgba(255,255,255,0.1);
+            border-radius:24px; max-width:460px; width:90%;
+            display:flex; flex-direction:column; align-items:center; gap:1.2rem;
+            box-shadow:0 24px 80px rgba(0,0,0,0.6);
+          ">
             <div style="font-size:3rem">🖥️</div>
-            <h1 class="login-title">Local Server Required</h1>
-            <p class="login-sub">The Admin Dashboard requires the Node.js server running on your computer. Open <strong>http://localhost:3500/admin.html</strong> instead.</p>
-            <a href="/" class="back-to-app" style="margin-top:.5rem">← Back to Game</a>
+            <h1 style="color:#f0f0f8;font-size:1.5rem;font-weight:800;margin:0;letter-spacing:-0.02em">
+              Admin Requires Local Server
+            </h1>
+            <p style="color:rgba(240,240,248,0.55);font-size:0.88rem;line-height:1.7;margin:0">
+              The admin dashboard needs the Node.js server running on your machine.
+              Start it with:
+            </p>
+            <code style="
+              background:rgba(108,99,255,0.12); border:1px solid rgba(108,99,255,0.3);
+              padding:0.5rem 1.2rem; border-radius:10px;
+              color:#a5a0ff; font-size:0.9rem; font-family:monospace;
+            ">npm start</code>
+            <p style="color:rgba(240,240,248,0.55);font-size:0.88rem;margin:0">
+              Then open in your browser:
+            </p>
+            <code style="
+              background:rgba(61,142,255,0.1); border:1px solid rgba(61,142,255,0.25);
+              padding:0.5rem 1.2rem; border-radius:10px;
+              color:#7ab8ff; font-size:0.85rem; font-family:monospace; word-break:break-all;
+            ">http://localhost:3500/admin.html</code>
+            <a href="index.html" style="
+              color:rgba(240,240,248,0.4); text-decoration:none;
+              font-size:0.82rem; margin-top:0.3rem;
+              transition:color 0.2s;
+            " onmouseover="this.style.color='rgba(240,240,248,0.8)'"
+               onmouseout="this.style.color='rgba(240,240,248,0.4)'">
+              ← Back to Game
+            </a>
           </div>`;
         return;
     }

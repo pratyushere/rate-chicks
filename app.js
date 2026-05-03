@@ -31,6 +31,10 @@ async function loadAllStudents() {
         ALL_STUDENTS = ALL_STUDENTS.filter(s => s.active !== false);
         loaded = true;
         updateHomeStats();
+
+        // Fix admin link using the same base as app.js — works on GitHub Pages subpaths
+        const adminLink = document.querySelector('.admin-link');
+        if (adminLink) adminLink.href = BASE + '/admin.html';
     } catch (err) {
         console.error('Failed to load students.json:', err);
         document.getElementById('statTotal').textContent = '!';
