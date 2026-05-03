@@ -67,6 +67,22 @@
         </button>
       </div>
 
+      <!-- Search Section -->
+      <div class="search-section" id="searchSection">
+        <div class="main-search-wrap">
+          <span class="main-search-icon">🔍</span>
+          <input
+            type="text"
+            id="mainSearch"
+            placeholder="Search any student by name…"
+            oninput="handleMainSearch()"
+            autocomplete="off"
+          />
+          <button id="clearMainSearch" class="main-search-clear" onclick="clearMainSearch()" style="display:none">✕</button>
+        </div>
+        <div class="search-results" id="searchResults"></div>
+      </div>
+
       <a href="admin.html" class="admin-link">Admin Dashboard →</a>
     </div>
   </section>

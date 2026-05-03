@@ -13,6 +13,15 @@ let discrepFilter = 'open';
 let searchQuery   = '';
 let adminPassword = '';
 
+const LS_HIDDEN = 'sop_hidden_ids';
+function getHiddenIds() {
+    try { return JSON.parse(localStorage.getItem(LS_HIDDEN) || '[]'); }
+    catch { return []; }
+}
+function setHiddenIds(ids) {
+    localStorage.setItem(LS_HIDDEN, JSON.stringify(ids));
+}
+
 // Edit modal state
 let editingStudentId = null;
 // Upload modal state
@@ -158,7 +167,8 @@ async function loadDiscrepancies() {
 }
 
 function updateHeaderStats() {
-    const active  = allStudents.filter(s => s.active !== false).length;
+    const hiddenIds = getHiddenIds();
+    const active  = allStudents.filter(s => s.active !== false && !hiddenIds.includes(s.id)).length;
     const hidden  = allStudents.length - active;
     const flagged = discrepancies.filter(d => !d.resolved).length;
     document.getElementById('adminStatActive').textContent  = `${active} Active`;
@@ -205,9 +215,10 @@ function clearSearch() {
 
 function getFilteredStudents() {
     let students = [...allStudents];
+    const hiddenIds = getHiddenIds();
     if (currentFilter === 'Male')   students = students.filter(s => s.gender === 'Male');
     if (currentFilter === 'Female') students = students.filter(s => s.gender === 'Female');
-    if (currentFilter === 'hidden') students = students.filter(s => s.active === false);
+    if (currentFilter === 'hidden') students = students.filter(s => s.active === false || hiddenIds.includes(s.id));
     if (searchQuery) {
         const q = searchQuery.toLowerCase();
         students = students.filter(s => s.name.toLowerCase().includes(q));
@@ -227,7 +238,8 @@ function renderTable() {
     }
 
     document.getElementById('adminTableBody').innerHTML = students.map(s => {
-        const isActive = s.active !== false;
+        const hiddenIds = getHiddenIds();
+        const isHidden = s.active === false || hiddenIds.includes(s.id);
         const isFlagged = s.ocr_match === false;
 
         const photoCell = s.photo
@@ -237,17 +249,17 @@ function renderTable() {
         const nameContent = isFlagged
             ? `<span class="student-name-cell">${toTitleCase(s.name)}</span>
                <span class="ocr-flag" title="OCR name: ${s.ocr_name || '?'}">⚠ OCR mismatch</span>`
-            : `<span class="student-name-cell ${isActive ? '' : 'hidden-name'}">${toTitleCase(s.name)}</span>`;
+            : `<span class="student-name-cell ${isHidden ? 'hidden-name' : ''}">${toTitleCase(s.name)}</span>`;
 
-        const statusBadge = isActive
+        const statusBadge = !isHidden
             ? '<span class="status-badge active">Active</span>'
             : '<span class="status-badge hidden">Hidden</span>';
 
-        const actionBtn = isActive
-            ? `<button class="btn-toggle btn-remove" onclick="toggleStudent(${s.id}, false)">Remove</button>`
-            : `<button class="btn-toggle btn-restore" onclick="toggleStudent(${s.id}, true)">Restore</button>`;
+        const actionBtn = !isHidden
+            ? `<button class="btn-toggle btn-remove" onclick="toggleStudent(${s.id}, false)">Hide</button>`
+            : `<button class="btn-toggle btn-restore" onclick="toggleStudent(${s.id}, true)">Unhide</button>`;
 
-        return `<tr id="row-${s.id}" class="${isFlagged ? 'flagged-row' : ''}">
+        return `<tr id="row-${s.id}" class="${isFlagged ? 'flagged-row' : ''}" style="${isHidden ? 'opacity: 0.4;' : ''}">
           <td class="num-col">${s.id.toString().padStart(5,'0')}</td>
           <td>${photoCell}</td>
           <td class="name-cell">${nameContent}</td>
@@ -258,19 +270,16 @@ function renderTable() {
     }).join('');
 }
 
-async function toggleStudent(id, activeState) {
-    try {
-        const res = await fetch(`${API}/api/students/${id}`, {
-            method: 'PATCH',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ password: adminPassword, active: activeState })
-        });
-        if (res.status === 401) { alert('Session expired.'); handleLogout(); return; }
-        const updated = await res.json();
-        const idx = allStudents.findIndex(s => s.id === id);
-        if (idx !== -1) allStudents[idx] = updated;
-        renderTable(); updateHeaderStats();
-    } catch { alert('Failed to update. Check server connection.'); }
+function toggleStudent(id, activeState) {
+    let hiddenIds = getHiddenIds();
+    if (!activeState) {
+        if (!hiddenIds.includes(id)) hiddenIds.push(id);
+    } else {
+        hiddenIds = hiddenIds.filter(hId => hId !== id);
+    }
+    setHiddenIds(hiddenIds);
+    renderTable(); 
+    updateHeaderStats();
 }
 
 // ── Discrepancies (Fix-it Tab) ─────────────────────────────────────────────

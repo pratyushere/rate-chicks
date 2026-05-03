@@ -1,17 +1,22 @@
-/* app.js — Static mode (works on GitHub Pages, no server needed) */
+/* app.js — Static mode + Search + LocalStorage Hide */
 
-// ── Detect base path (works both on localhost and GitHub Pages subpath) ──
+// ── Base path detection ───────────────────────────────────────────────────
 const BASE = (() => {
-    // If served from GitHub Pages like pratyushere.github.io/rate-chicks/
-    // we need to prefix data URLs with the repo subpath.
-    // document.currentScript gives us the path of this script file.
     const src = (document.currentScript?.src || '');
     const base = src.replace(/\/app\.js.*$/, '');
     return base || window.location.origin;
 })();
 
-// ── In-memory student store ───────────────────────────────────────────────
-let ALL_STUDENTS = [];
+// ── LocalStorage helpers ──────────────────────────────────────────────────
+const LS_HIDDEN = 'sop_hidden_ids';
+function getHiddenIds() {
+    try { return JSON.parse(localStorage.getItem(LS_HIDDEN) || '[]'); }
+    catch { return []; }
+}
+
+// ── Student store ─────────────────────────────────────────────────────────
+let ALL_STUDENTS_RAW = [];  // every student from JSON (for search)
+let ALL_STUDENTS     = [];  // active only (for game)
 let loaded = false;
 
 // ── Init ──────────────────────────────────────────────────────────────────
@@ -26,21 +31,27 @@ async function loadAllStudents() {
     try {
         const res = await fetch(`${BASE}/data/students.json`);
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
-        ALL_STUDENTS = await res.json();
-        // Only active students
-        ALL_STUDENTS = ALL_STUDENTS.filter(s => s.active !== false);
+        ALL_STUDENTS_RAW = await res.json();
+        refreshActivePool();
         loaded = true;
         updateHomeStats();
 
-        // Fix admin link using the same base as app.js — works on GitHub Pages subpaths
+        // Fix admin link so it always resolves correctly
         const adminLink = document.querySelector('.admin-link');
         if (adminLink) adminLink.href = BASE + '/admin.html';
     } catch (err) {
         console.error('Failed to load students.json:', err);
         document.getElementById('statTotal').textContent = '!';
-        document.getElementById('boysCount').textContent = 'Load error';
+        document.getElementById('boysCount').textContent  = 'Load error';
         document.getElementById('girlsCount').textContent = 'Load error';
     }
+}
+
+function refreshActivePool() {
+    const hiddenIds = getHiddenIds();
+    ALL_STUDENTS = ALL_STUDENTS_RAW.filter(s =>
+        s.active !== false && !hiddenIds.includes(s.id)
+    );
 }
 
 function updateHomeStats() {
@@ -52,6 +63,72 @@ function updateHomeStats() {
     document.getElementById('boysCount').textContent  = `${male} students`;
     document.getElementById('girlsCount').textContent = `${female} students`;
 }
+
+// ── Search ────────────────────────────────────────────────────────────────
+function handleMainSearch() {
+    const input   = document.getElementById('mainSearch');
+    const query   = input.value.trim();
+    const results = document.getElementById('searchResults');
+    const clearBtn = document.getElementById('clearMainSearch');
+
+    clearBtn.style.display = query ? 'flex' : 'none';
+
+    if (!query || !loaded) {
+        results.style.display = 'none';
+        return;
+    }
+
+    const q = query.toLowerCase();
+    const hiddenIds = getHiddenIds();
+    const matches = ALL_STUDENTS_RAW.filter(s =>
+        s.name.toLowerCase().includes(q)
+    ).slice(0, 8);
+
+    if (!matches.length) {
+        results.innerHTML = `<div class="search-no-result">No student found matching "<strong>${query}</strong>"</div>`;
+        results.style.display = 'block';
+        return;
+    }
+
+    results.style.display = 'block';
+    results.innerHTML = matches.map(s => {
+        const isHidden = hiddenIds.includes(s.id) || s.active === false;
+        const photoUrl = s.photo ? `${BASE}/data/${s.photo}` : '';
+        const statusClass = isHidden ? 'status-hidden' : 'status-available';
+        const statusText  = isHidden ? '🚫 Hidden by Admin' : '✅ Available for Vote';
+
+        return `<div class="search-result-card ${isHidden ? 'result-hidden' : ''}">
+          <div class="result-photo-wrap">
+            ${photoUrl
+              ? `<img src="${photoUrl}" alt="${s.name}" class="result-photo" />`
+              : `<div class="result-photo-placeholder">👤</div>`}
+          </div>
+          <div class="result-info">
+            <div class="result-name">${toTitleCase(s.name)}</div>
+            <div class="result-meta">
+              <span class="result-gender ${s.gender.toLowerCase()}">${s.gender}</span>
+              <span class="result-id">SL#${String(s.id).padStart(5,'0')}</span>
+            </div>
+            <span class="result-status ${statusClass}">${statusText}</span>
+          </div>
+        </div>`;
+    }).join('');
+}
+
+function clearMainSearch() {
+    document.getElementById('mainSearch').value = '';
+    document.getElementById('clearMainSearch').style.display = 'none';
+    document.getElementById('searchResults').style.display   = 'none';
+    document.getElementById('mainSearch').focus();
+}
+
+// Close search results when clicking outside
+document.addEventListener('click', e => {
+    const wrap = document.getElementById('searchSection');
+    if (wrap && !wrap.contains(e.target)) {
+        document.getElementById('searchResults').style.display = 'none';
+    }
+});
 
 // ── Game State ─────────────────────────────────────────────────────────────
 let currentGender  = null;
@@ -70,12 +147,13 @@ function selectTrack(gender) {
     smashCount = 0; passCount = 0; sessionRated = 0; shownIds = [];
     updateCounters();
 
-    // Build shuffled pool for this gender
+    // Refresh pool in case admin changed hidden list
+    refreshActivePool();
+
     pool = ALL_STUDENTS
         .filter(s => s.gender === gender)
         .sort(() => Math.random() - 0.5);
 
-    // Switch screens
     document.getElementById('trackScreen').classList.remove('active');
     const gs = document.getElementById('gameScreen');
     gs.style.display = 'flex';
@@ -92,11 +170,13 @@ function goHome() {
     document.getElementById('gameScreen').classList.remove('active');
     document.getElementById('gameScreen').style.display = 'none';
     document.getElementById('trackScreen').classList.add('active');
+    refreshActivePool();
+    updateHomeStats();
 }
 
 function resetAndRestart() {
     shownIds = [];
-    pool = pool.sort(() => Math.random() - 0.5); // re-shuffle
+    pool = pool.sort(() => Math.random() - 0.5);
     loadNext();
 }
 
@@ -105,23 +185,17 @@ function loadNext() {
     if (isAnimating) return;
     showLoading();
 
-    // Get a student not yet shown
     let candidate = pool.find(s => !shownIds.includes(s.id));
-
     if (!candidate) {
-        // All shown — reset pool
-        if (pool.length === 0) { showEmpty(); return; }
+        if (!pool.length) { showEmpty(); return; }
         shownIds = [];
         pool = pool.sort(() => Math.random() - 0.5);
         candidate = pool[0];
     }
-
     if (!candidate) { showEmpty(); return; }
 
     currentStudent = candidate;
     shownIds.push(candidate.id);
-
-    // Small delay to feel responsive
     setTimeout(() => renderStudent(candidate), 80);
 }
 
@@ -136,16 +210,15 @@ function renderStudent(student) {
     badge.className   = 'student-badge ' + (student.gender === 'Male' ? 'male' : 'female');
 
     if (student.photo) {
-        const photoUrl = `${BASE}/data/${student.photo}`;
-        photo.src = photoUrl;
+        photo.src = `${BASE}/data/${student.photo}`;
         photo.alt = student.name;
         photo.onerror = () => {
             photo.src = '';
-            photo.parentElement.style.background = 'var(--surface2)';
+            photo.parentElement.style.background = '#1a1a26';
         };
     } else {
         photo.src = '';
-        card.querySelector('.card-photo-wrap').style.background = 'var(--surface2)';
+        card.querySelector('.card-photo-wrap').style.background = '#1a1a26';
     }
 
     hideLoading();
@@ -168,7 +241,6 @@ function handleVote(type) {
     updateCounters();
 
     card.classList.add(type === 'smash' ? 'swipe-right' : 'swipe-left');
-
     overlay.className = `vote-overlay flash-${type}`;
     setTimeout(() => { overlay.className = 'vote-overlay'; }, 400);
 
@@ -188,14 +260,12 @@ function showLoading() {
     document.getElementById('actionButtons').style.opacity      = '0.4';
     document.getElementById('actionButtons').style.pointerEvents = 'none';
 }
-
 function hideLoading() {
     document.getElementById('loadingCard').style.display  = 'none';
     document.getElementById('emptyCard').style.display    = 'none';
     document.getElementById('actionButtons').style.opacity      = '1';
     document.getElementById('actionButtons').style.pointerEvents = 'auto';
 }
-
 function showEmpty() {
     document.getElementById('loadingCard').style.display  = 'none';
     document.getElementById('studentCard').style.display  = 'none';
@@ -203,13 +273,11 @@ function showEmpty() {
     document.getElementById('actionButtons').style.opacity      = '0.3';
     document.getElementById('actionButtons').style.pointerEvents = 'none';
 }
-
 function updateCounters() {
     document.getElementById('smashCount').textContent   = smashCount;
     document.getElementById('passCount').textContent    = passCount;
     document.getElementById('sessionCount').textContent = sessionRated;
 }
-
 function toTitleCase(str) {
     return (str || '').toLowerCase().replace(/\b\w/g, c => c.toUpperCase());
 }
