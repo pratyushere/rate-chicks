@@ -10,6 +10,9 @@ const PORT = 3500;
 // ── Middleware ─────────────────────────────────────────────────────────────
 app.use(cors());
 app.use(express.json());
+// Serve root folder → index.html, style.css, app.js
+app.use(express.static(path.join(__dirname)));
+// Serve public/ folder → admin.html and its css/js
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/data/photos', express.static(path.join(__dirname, 'data', 'photos')));
 
@@ -189,7 +192,7 @@ app.patch('/api/discrepancies/:id/resolve', requireAdmin, (req, res) => {
 
 // ── Catch-all → SPA ───────────────────────────────────────────────────────
 app.get('/{*path}', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+    res.sendFile(path.join(__dirname, 'index.html'));
 });
 
 app.listen(PORT, () => {
