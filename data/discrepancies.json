@@ -1,0 +1,821 @@
+[
+  {
+    "id": 1,
+    "name": "ADIBA PERWAIZ",
+    "ocr_name": "ADIBARERWAZ",
+    "photo": "photos/00001_ADIBA_PERWAIZ.jpeg",
+    "resolved": true,
+    "note": "PDF name 'ADIBA PERWAIZ' vs OCR name 'ADIBARERWAZ'",
+    "resolution": "Name corrected to: ADIBA PERWAIZ"
+  },
+  {
+    "id": 2,
+    "name": "AIESHA RAZA",
+    "ocr_name": "ATESHARAZ",
+    "photo": "photos/00002_AIESHA_RAZA.jpeg",
+    "resolved": true,
+    "note": "PDF name 'AIESHA RAZA' vs OCR name 'ATESHARAZ'",
+    "resolution": "Verified as correct by admin"
+  },
+  {
+    "id": 12,
+    "name": "DEEKSHA MISHRA",
+    "ocr_name": "D M",
+    "photo": "photos/00012_DEEKSHA_MISHRA.jpeg",
+    "resolved": true,
+    "note": "PDF name 'DEEKSHA MISHRA' vs OCR name 'D M'",
+    "resolution": "Verified as correct by admin"
+  },
+  {
+    "id": 17,
+    "name": "ISHITA KUNDU",
+    "ocr_name": "BR",
+    "photo": "photos/00017_ISHITA_KUNDU.jpeg",
+    "resolved": true,
+    "note": "PDF name 'ISHITA KUNDU' vs OCR name 'BR'",
+    "resolution": "Verified as correct by admin"
+  },
+  {
+    "id": 18,
+    "name": "KASHAK KUMARI MAHTO",
+    "ocr_name": "ASHARKUNARIHARTO",
+    "photo": "photos/00018_KASHAK_KUMARI_MAHTO.jpeg",
+    "resolved": true,
+    "note": "PDF name 'KASHAK KUMARI MAHTO' vs OCR name 'ASHARKUNARIHARTO'",
+    "resolution": "Verified as correct by admin"
+  },
+  {
+    "id": 21,
+    "name": "KHUSHI KUMARI",
+    "ocr_name": "KHUSHIKUMARISAHA",
+    "photo": "photos/00021_KHUSHI_KUMARI.jpeg",
+    "resolved": true,
+    "note": "PDF name 'KHUSHI KUMARI' vs OCR name 'KHUSHIKUMARISAHA'",
+    "resolution": "Verified as correct by admin"
+  },
+  {
+    "id": 25,
+    "name": "MEGHA CHOUDHARY",
+    "ocr_name": "WACHOUDHART",
+    "photo": "photos/00025_MEGHA_CHOUDHARY.jpeg",
+    "resolved": true,
+    "note": "PDF name 'MEGHA CHOUDHARY' vs OCR name 'WACHOUDHART'",
+    "resolution": "Verified as correct by admin"
+  },
+  {
+    "id": 26,
+    "name": "MITHI RAJ",
+    "ocr_name": "PR",
+    "photo": "photos/00026_MITHI_RAJ.jpeg",
+    "resolved": true,
+    "note": "PDF name 'MITHI RAJ' vs OCR name 'PR'",
+    "resolution": "Verified as correct by admin"
+  },
+  {
+    "id": 27,
+    "name": "MITHI SAHA",
+    "ocr_name": "MTL",
+    "photo": "photos/00027_MITHI_SAHA.jpeg",
+    "resolved": true,
+    "note": "PDF name 'MITHI SAHA' vs OCR name 'MTL'",
+    "resolution": "Verified as correct by admin"
+  },
+  {
+    "id": 28,
+    "name": "MONIKA AGARWAL",
+    "ocr_name": "JWAA",
+    "photo": "photos/00028_MONIKA_AGARWAL.jpeg",
+    "resolved": true,
+    "note": "PDF name 'MONIKA AGARWAL' vs OCR name 'JWAA'",
+    "resolution": "Verified as correct by admin"
+  },
+  {
+    "id": 30,
+    "name": "MUSKAN KUMARI",
+    "ocr_name": "MUSKANKUMARI",
+    "photo": "photos/00030_MUSKAN_KUMARI.jpeg",
+    "resolved": true,
+    "note": "PDF name 'MUSKAN KUMARI' vs OCR name 'MUSKANKUMARI'",
+    "resolution": "Verified as correct by admin"
+  },
+  {
+    "id": 32,
+    "name": "MUSKAN RAJ",
+    "ocr_name": "YES",
+    "photo": "photos/00032_MUSKAN_RAJ.jpeg",
+    "resolved": true,
+    "note": "PDF name 'MUSKAN RAJ' vs OCR name 'YES'",
+    "resolution": "Verified as correct by admin"
+  },
+  {
+    "id": 35,
+    "name": "NEHA DAS",
+    "ocr_name": "NBEAAVDAS",
+    "photo": "photos/00035_NEHA_DAS.jpeg",
+    "resolved": true,
+    "note": "PDF name 'NEHA DAS' vs OCR name 'NBEAAVDAS'",
+    "resolution": "Verified as correct by admin"
+  },
+  {
+    "id": 38,
+    "name": "NEHAL AGARWAL",
+    "ocr_name": "I",
+    "photo": "photos/00038_NEHAL_AGARWAL.jpeg",
+    "resolved": true,
+    "note": "PDF name 'NEHAL AGARWAL' vs OCR name 'I'",
+    "resolution": "Verified as correct by admin"
+  },
+  {
+    "id": 46,
+    "name": "PRITHA DAS",
+    "ocr_name": "PRITHADAS",
+    "photo": "photos/00046_PRITHA_DAS.jpeg",
+    "resolved": true,
+    "note": "PDF name 'PRITHA DAS' vs OCR name 'PRITHADAS'",
+    "resolution": "Verified as correct by admin"
+  },
+  {
+    "id": 49,
+    "name": "REFAT JABEEN FATMAH",
+    "ocr_name": "SSARTSE S",
+    "photo": "photos/00049_REFAT_JABEEN_FATMAH.jpeg",
+    "resolved": true,
+    "note": "PDF name 'REFAT JABEEN FATMAH' vs OCR name 'SSARTSE S'",
+    "resolution": "Verified as correct by admin"
+  },
+  {
+    "id": 50,
+    "name": "RIDHIMA MODAK",
+    "ocr_name": "RIDHIMANODAK",
+    "photo": "photos/00050_RIDHIMA_MODAK.jpeg",
+    "resolved": true,
+    "note": "PDF name 'RIDHIMA MODAK' vs OCR name 'RIDHIMANODAK'",
+    "resolution": "Verified as correct by admin"
+  },
+  {
+    "id": 51,
+    "name": "RIFAT BANU",
+    "ocr_name": "SOZ",
+    "photo": "photos/00051_RIFAT_BANU.jpeg",
+    "resolved": true,
+    "note": "PDF name 'RIFAT BANU' vs OCR name 'SOZ'",
+    "resolution": "Verified as correct by admin"
+  },
+  {
+    "id": 52,
+    "name": "RIMMI JHA",
+    "ocr_name": "SRMMIHA",
+    "photo": "photos/00052_RIMMI_JHA.jpeg",
+    "resolved": true,
+    "note": "PDF name 'RIMMI JHA' vs OCR name 'SRMMIHA'",
+    "resolution": "Verified as correct by admin"
+  },
+  {
+    "id": 53,
+    "name": "RITIKA RANJAN",
+    "ocr_name": "RITICARANIAN",
+    "photo": "photos/00053_RITIKA_RANJAN.jpeg",
+    "resolved": true,
+    "note": "PDF name 'RITIKA RANJAN' vs OCR name 'RITICARANIAN'",
+    "resolution": "Verified as correct by admin"
+  },
+  {
+    "id": 54,
+    "name": "RIYA RAJ",
+    "ocr_name": "J M",
+    "photo": "photos/00054_RIYA_RAJ.jpeg",
+    "resolved": true,
+    "note": "PDF name 'RIYA RAJ' vs OCR name 'J M'",
+    "resolution": "Verified as correct by admin"
+  },
+  {
+    "id": 55,
+    "name": "SAADIYA SHAMIM",
+    "ocr_name": "S",
+    "photo": "photos/00055_SAADIYA_SHAMIM.jpeg",
+    "resolved": true,
+    "note": "PDF name 'SAADIYA SHAMIM' vs OCR name 'S'",
+    "resolution": "Verified as correct by admin"
+  },
+  {
+    "id": 56,
+    "name": "SADAF AFREEN",
+    "ocr_name": "SADAEAPREEN",
+    "photo": "photos/00056_SADAF_AFREEN.jpeg",
+    "resolved": true,
+    "note": "PDF name 'SADAF AFREEN' vs OCR name 'SADAEAPREEN'",
+    "resolution": "Verified as correct by admin"
+  },
+  {
+    "id": 57,
+    "name": "SAMIKCHHA KALYANI",
+    "ocr_name": "S",
+    "photo": "photos/00057_SAMIKCHHA_KALYANI.jpeg",
+    "resolved": true,
+    "note": "PDF name 'SAMIKCHHA KALYANI' vs OCR name 'S'",
+    "resolution": "Verified as correct by admin"
+  },
+  {
+    "id": 58,
+    "name": "SAMIKSHA SAH",
+    "ocr_name": "SAMIKSHASA",
+    "photo": "photos/00058_SAMIKSHA_SAH.jpeg",
+    "resolved": true,
+    "note": "PDF name 'SAMIKSHA SAH' vs OCR name 'SAMIKSHASA'",
+    "resolution": "Verified as correct by admin"
+  },
+  {
+    "id": 64,
+    "name": "SAYANI BHATTACHARYA",
+    "ocr_name": "SB",
+    "photo": "photos/00064_SAYANI_BHATTACHARYA.jpeg",
+    "resolved": true,
+    "note": "PDF name 'SAYANI BHATTACHARYA' vs OCR name 'SB'",
+    "resolution": "Verified as correct by admin"
+  },
+  {
+    "id": 68,
+    "name": "SHRUTI ROY",
+    "ocr_name": "UMGHRUTIROY",
+    "photo": "photos/00068_SHRUTI_ROY.jpeg",
+    "resolved": true,
+    "note": "PDF name 'SHRUTI ROY' vs OCR name 'UMGHRUTIROY'",
+    "resolution": "Verified as correct by admin"
+  },
+  {
+    "id": 72,
+    "name": "SOMYA DAS",
+    "ocr_name": "ATG",
+    "photo": "photos/00072_SOMYA_DAS.jpeg",
+    "resolved": true,
+    "note": "PDF name 'SOMYA DAS' vs OCR name 'ATG'",
+    "resolution": "Verified as correct by admin"
+  },
+  {
+    "id": 75,
+    "name": "SURVI KUMARI",
+    "ocr_name": "Y",
+    "photo": "photos/00075_SURVI_KUMARI.jpeg",
+    "resolved": true,
+    "note": "PDF name 'SURVI KUMARI' vs OCR name 'Y'",
+    "resolution": "Verified as correct by admin"
+  },
+  {
+    "id": 77,
+    "name": "TANISHQ ANAND",
+    "ocr_name": "TANISHIANAND",
+    "photo": "photos/00077_TANISHQ_ANAND.jpeg",
+    "resolved": true,
+    "note": "PDF name 'TANISHQ ANAND' vs OCR name 'TANISHIANAND'",
+    "resolution": "Verified as correct by admin"
+  },
+  {
+    "id": 78,
+    "name": "TANUSHA AGARWAL",
+    "ocr_name": "Y",
+    "photo": "photos/00078_TANUSHA_AGARWAL.jpeg",
+    "resolved": true,
+    "note": "PDF name 'TANUSHA AGARWAL' vs OCR name 'Y'",
+    "resolution": "Verified as correct by admin"
+  },
+  {
+    "id": 85,
+    "name": "AAYUSH KUMAR",
+    "ocr_name": "SHKUMAR",
+    "photo": "photos/00085_AAYUSH_KUMAR.jpeg",
+    "resolved": true,
+    "note": "PDF name 'AAYUSH KUMAR' vs OCR name 'SHKUMAR'",
+    "resolution": "Verified as correct by admin"
+  },
+  {
+    "id": 87,
+    "name": "ABHIRAJ PRASAD SAHA",
+    "ocr_name": "S",
+    "photo": "photos/00087_ABHIRAJ_PRASAD_SAHA.jpeg",
+    "resolved": true,
+    "note": "PDF name 'ABHIRAJ PRASAD SAHA' vs OCR name 'S'",
+    "resolution": "Verified as correct by admin"
+  },
+  {
+    "id": 88,
+    "name": "ABHISHEK JHA",
+    "ocr_name": "ABHISHEKJHA",
+    "photo": "photos/00088_ABHISHEK_JHA.jpeg",
+    "resolved": true,
+    "note": "PDF name 'ABHISHEK JHA' vs OCR name 'ABHISHEKJHA'",
+    "resolution": "Verified as correct by admin"
+  },
+  {
+    "id": 89,
+    "name": "ABHISHEK KUMAR",
+    "ocr_name": "S",
+    "photo": "photos/00089_ABHISHEK_KUMAR.jpeg",
+    "resolved": true,
+    "note": "PDF name 'ABHISHEK KUMAR' vs OCR name 'S'",
+    "resolution": "Verified as correct by admin"
+  },
+  {
+    "id": 95,
+    "name": "ADITYA MISHRA",
+    "ocr_name": "ADITYAMISHRA",
+    "photo": "photos/00095_ADITYA_MISHRA.jpeg",
+    "resolved": true,
+    "note": "PDF name 'ADITYA MISHRA' vs OCR name 'ADITYAMISHRA'",
+    "resolution": "Verified as correct by admin"
+  },
+  {
+    "id": 98,
+    "name": "AKSHEET PRASAD",
+    "ocr_name": "AKSHEETPRASAD",
+    "photo": "photos/00098_AKSHEET_PRASAD.jpeg",
+    "resolved": true,
+    "note": "PDF name 'AKSHEET PRASAD' vs OCR name 'AKSHEETPRASAD'",
+    "resolution": "Verified as correct by admin"
+  },
+  {
+    "id": 99,
+    "name": "AMAN JHA",
+    "ocr_name": "MH",
+    "photo": "photos/00099_AMAN_JHA.jpeg",
+    "resolved": true,
+    "note": "PDF name 'AMAN JHA' vs OCR name 'MH'",
+    "resolution": "Verified as correct by admin"
+  },
+  {
+    "id": 100,
+    "name": "AMAN KUMAR RAUT",
+    "ocr_name": "AMNKUMARRALT",
+    "photo": "photos/00100_AMAN_KUMAR_RAUT.jpeg",
+    "resolved": true,
+    "note": "PDF name 'AMAN KUMAR RAUT' vs OCR name 'AMNKUMARRALT'",
+    "resolution": "Verified as correct by admin"
+  },
+  {
+    "id": 102,
+    "name": "ANKIT KUMAR",
+    "ocr_name": "ANKITKUMAR",
+    "photo": "photos/00102_ANKIT_KUMAR.jpeg",
+    "resolved": true,
+    "note": "PDF name 'ANKIT KUMAR' vs OCR name 'ANKITKUMAR'",
+    "resolution": "Verified as correct by admin"
+  },
+  {
+    "id": 104,
+    "name": "ANSH KUMAR",
+    "ocr_name": "AH",
+    "photo": "photos/00104_ANSH_KUMAR.jpeg",
+    "resolved": true,
+    "note": "PDF name 'ANSH KUMAR' vs OCR name 'AH'",
+    "resolution": "Verified as correct by admin"
+  },
+  {
+    "id": 107,
+    "name": "ARINDAM SAHA",
+    "ocr_name": "ARINDAMSAHA",
+    "photo": "photos/00107_ARINDAM_SAHA.jpeg",
+    "resolved": true,
+    "note": "PDF name 'ARINDAM SAHA' vs OCR name 'ARINDAMSAHA'",
+    "resolution": "Verified as correct by admin"
+  },
+  {
+    "id": 109,
+    "name": "ATIF GHAZI",
+    "ocr_name": "AGHAZ",
+    "photo": "photos/00109_ATIF_GHAZI.jpeg",
+    "resolved": true,
+    "note": "PDF name 'ATIF GHAZI' vs OCR name 'AGHAZ'",
+    "resolution": "Verified as correct by admin"
+  },
+  {
+    "id": 112,
+    "name": "AYUSH KUMAR",
+    "ocr_name": "SRUMAR",
+    "photo": "photos/00112_AYUSH_KUMAR.jpeg",
+    "resolved": true,
+    "note": "PDF name 'AYUSH KUMAR' vs OCR name 'SRUMAR'",
+    "resolution": "Verified as correct by admin"
+  },
+  {
+    "id": 119,
+    "name": "DEWANGSHU RAUT",
+    "ocr_name": "DEWNHRAUT",
+    "photo": "photos/00119_DEWANGSHU_RAUT.jpeg",
+    "resolved": true,
+    "note": "PDF name 'DEWANGSHU RAUT' vs OCR name 'DEWNHRAUT'",
+    "resolution": "Verified as correct by admin"
+  },
+  {
+    "id": 120,
+    "name": "DHIRAJ MODAK",
+    "ocr_name": "HIRALMODAK",
+    "photo": "photos/00120_DHIRAJ_MODAK.jpeg",
+    "resolved": true,
+    "note": "PDF name 'DHIRAJ MODAK' vs OCR name 'HIRALMODAK'",
+    "resolution": "Verified as correct by admin"
+  },
+  {
+    "id": 123,
+    "name": "FARHAN ANJUM",
+    "ocr_name": "FARHANSANJUM",
+    "photo": "photos/00123_FARHAN_ANJUM.jpeg",
+    "resolved": true,
+    "note": "PDF name 'FARHAN ANJUM' vs OCR name 'FARHANSANJUM'",
+    "resolution": "Verified as correct by admin"
+  },
+  {
+    "id": 127,
+    "name": "HAMDAN BARI",
+    "ocr_name": "AMANBA",
+    "photo": "photos/00127_HAMDAN_BARI.jpeg",
+    "resolved": true,
+    "note": "PDF name 'HAMDAN BARI' vs OCR name 'AMANBA'",
+    "resolution": "Verified as correct by admin"
+  },
+  {
+    "id": 128,
+    "name": "HARSH KUMAR VERMA",
+    "ocr_name": "HARSHKOMARVERWA",
+    "photo": "photos/00128_HARSH_KUMAR_VERMA.jpeg",
+    "resolved": true,
+    "note": "PDF name 'HARSH KUMAR VERMA' vs OCR name 'HARSHKOMARVERWA'",
+    "resolution": "Verified as correct by admin"
+  },
+  {
+    "id": 129,
+    "name": "HARSH VARDHAN KUMAR GUPTA",
+    "ocr_name": "HARSHY SS GUPTA",
+    "photo": "photos/00129_HARSH_VARDHAN_KUMAR_GUPTA.jpeg",
+    "resolved": true,
+    "note": "PDF name 'HARSH VARDHAN KUMAR GUPTA' vs OCR name 'HARSHY SS GUPTA'",
+    "resolution": "Verified as correct by admin"
+  },
+  {
+    "id": 130,
+    "name": "HARSH VARDHAN CHAUDAHRI",
+    "ocr_name": "TT",
+    "photo": "photos/00130_HARSH_VARDHAN_CHAUDAHRI.jpeg",
+    "resolved": true,
+    "note": "PDF name 'HARSH VARDHAN CHAUDAHRI' vs OCR name 'TT'",
+    "resolution": "Verified as correct by admin"
+  },
+  {
+    "id": 132,
+    "name": "HITANSH BAFNA",
+    "ocr_name": "HITANGHBAF NA",
+    "photo": "photos/00132_HITANSH_BAFNA.jpeg",
+    "resolved": true,
+    "note": "PDF name 'HITANSH BAFNA' vs OCR name 'HITANGHBAF NA'",
+    "resolution": "Name corrected to: HITANSH BAFNA"
+  },
+  {
+    "id": 134,
+    "name": "HRITIK SHARMA",
+    "ocr_name": "HRITSHARMA",
+    "photo": "photos/00134_HRITIK_SHARMA.jpeg",
+    "resolved": true,
+    "note": "PDF name 'HRITIK SHARMA' vs OCR name 'HRITSHARMA'",
+    "resolution": "Verified as correct by admin"
+  },
+  {
+    "id": 137,
+    "name": "JAYANTA LAL SINGHA",
+    "ocr_name": "RE",
+    "photo": "photos/00137_JAYANTA_LAL_SINGHA.jpeg",
+    "resolved": true,
+    "note": "PDF name 'JAYANTA LAL SINGHA' vs OCR name 'RE'",
+    "resolution": "Verified as correct by admin"
+  },
+  {
+    "id": 141,
+    "name": "KARAN KUMAR",
+    "ocr_name": "ARG",
+    "photo": "photos/00141_KARAN_KUMAR.jpeg",
+    "resolved": true,
+    "note": "PDF name 'KARAN KUMAR' vs OCR name 'ARG'",
+    "resolution": "Verified as correct by admin"
+  },
+  {
+    "id": 142,
+    "name": "KAUSHIK DAS",
+    "ocr_name": "KAUSHIKDAS",
+    "photo": "photos/00142_KAUSHIK_DAS.jpeg",
+    "resolved": true,
+    "note": "PDF name 'KAUSHIK DAS' vs OCR name 'KAUSHIKDAS'",
+    "resolution": "Verified as correct by admin"
+  },
+  {
+    "id": 145,
+    "name": "KUMAR ARYA",
+    "ocr_name": "KUMARARYA",
+    "photo": "photos/00145_KUMAR_ARYA.jpeg",
+    "resolved": true,
+    "note": "PDF name 'KUMAR ARYA' vs OCR name 'KUMARARYA'",
+    "resolution": "Verified as correct by admin"
+  },
+  {
+    "id": 146,
+    "name": "LAKSHAY KUMAR DAS",
+    "ocr_name": "LAKSHAKUMA",
+    "photo": "photos/00146_LAKSHAY_KUMAR_DAS.jpeg",
+    "resolved": true,
+    "note": "PDF name 'LAKSHAY KUMAR DAS' vs OCR name 'LAKSHAKUMA'",
+    "resolution": "Verified as correct by admin"
+  },
+  {
+    "id": 148,
+    "name": "MAYUR KARTIKEN",
+    "ocr_name": "WAYGKARTIEN",
+    "photo": "photos/00148_MAYUR_KARTIKEN.jpeg",
+    "resolved": true,
+    "note": "PDF name 'MAYUR KARTIKEN' vs OCR name 'WAYGKARTIEN'",
+    "resolution": "Verified as correct by admin"
+  },
+  {
+    "id": 150,
+    "name": "MD ASHFAQUE ALI",
+    "ocr_name": "ASHFAGUEAL",
+    "photo": "photos/00150_MD_ASHFAQUE_ALI.jpeg",
+    "resolved": true,
+    "note": "PDF name 'MD ASHFAQUE ALI' vs OCR name 'ASHFAGUEAL'",
+    "resolution": "Verified as correct by admin"
+  },
+  {
+    "id": 151,
+    "name": "MD ASLAM QUAMAR",
+    "ocr_name": "ASLAMQUAMAR",
+    "photo": "photos/00151_MD_ASLAM_QUAMAR.jpeg",
+    "resolved": true,
+    "note": "PDF name 'MD ASLAM QUAMAR' vs OCR name 'ASLAMQUAMAR'",
+    "resolution": "Verified as correct by admin"
+  },
+  {
+    "id": 152,
+    "name": "MD ATIF QUAMAR",
+    "ocr_name": "MOATIFQUAMAR",
+    "photo": "photos/00152_MD_ATIF_QUAMAR.jpeg",
+    "resolved": true,
+    "note": "PDF name 'MD ATIF QUAMAR' vs OCR name 'MOATIFQUAMAR'",
+    "resolution": "Verified as correct by admin"
+  },
+  {
+    "id": 153,
+    "name": "MD FAISAL REZA",
+    "ocr_name": "MOFAIGALREZA",
+    "photo": "photos/00153_MD_FAISAL_REZA.jpeg",
+    "resolved": true,
+    "note": "PDF name 'MD FAISAL REZA' vs OCR name 'MOFAIGALREZA'",
+    "resolution": "Verified as correct by admin"
+  },
+  {
+    "id": 155,
+    "name": "MD MUDASSIR NAZMI",
+    "ocr_name": "OASOIRNAZ",
+    "photo": "photos/00155_MD_MUDASSIR_NAZMI.jpeg",
+    "resolved": true,
+    "note": "PDF name 'MD MUDASSIR NAZMI' vs OCR name 'OASOIRNAZ'",
+    "resolution": "Verified as correct by admin"
+  },
+  {
+    "id": 159,
+    "name": "MD SAHIL AHMAD",
+    "ocr_name": "J SAAHMAD",
+    "photo": "photos/00159_MD_SAHIL_AHMAD.jpeg",
+    "resolved": true,
+    "note": "PDF name 'MD SAHIL AHMAD' vs OCR name 'J SAAHMAD'",
+    "resolution": "Verified as correct by admin"
+  },
+  {
+    "id": 160,
+    "name": "MD SHAUKAT AZIZ",
+    "ocr_name": "SHAUKATAZ",
+    "photo": "photos/00160_MD_SHAUKAT_AZIZ.jpeg",
+    "resolved": true,
+    "note": "PDF name 'MD SHAUKAT AZIZ' vs OCR name 'SHAUKATAZ'",
+    "resolution": "Verified as correct by admin"
+  },
+  {
+    "id": 161,
+    "name": "MD UMAR KHAIYAM",
+    "ocr_name": "UMA",
+    "photo": "photos/00161_MD_UMAR_KHAIYAM.jpeg",
+    "resolved": true,
+    "note": "PDF name 'MD UMAR KHAIYAM' vs OCR name 'UMA'",
+    "resolution": "Verified as correct by admin"
+  },
+  {
+    "id": 162,
+    "name": "MD ZAWWAR SAQUIB",
+    "ocr_name": "ZSA",
+    "photo": "photos/00162_MD_ZAWWAR_SAQUIB.jpeg",
+    "resolved": true,
+    "note": "PDF name 'MD ZAWWAR SAQUIB' vs OCR name 'ZSA'",
+    "resolution": "Verified as correct by admin"
+  },
+  {
+    "id": 164,
+    "name": "MEET JAIN",
+    "ocr_name": "MEETJAN",
+    "photo": "photos/00164_MEET_JAIN.jpeg",
+    "resolved": true,
+    "note": "PDF name 'MEET JAIN' vs OCR name 'MEETJAN'",
+    "resolution": "Verified as correct by admin"
+  },
+  {
+    "id": 167,
+    "name": "MUNIF PARWEZ",
+    "ocr_name": "P",
+    "photo": "photos/00167_MUNIF_PARWEZ.jpeg",
+    "resolved": true,
+    "note": "PDF name 'MUNIF PARWEZ' vs OCR name 'P'",
+    "resolution": "Verified as correct by admin"
+  },
+  {
+    "id": 169,
+    "name": "NIKHIL KUMAR YADAV",
+    "ocr_name": "KRYAA",
+    "photo": "photos/00169_NIKHIL_KUMAR_YADAV.jpeg",
+    "resolved": true,
+    "note": "PDF name 'NIKHIL KUMAR YADAV' vs OCR name 'KRYAA'",
+    "resolution": "Verified as correct by admin"
+  },
+  {
+    "id": 170,
+    "name": "PANKAJ KUMAR YADAV",
+    "ocr_name": "PAN AMARA",
+    "photo": "photos/00170_PANKAJ_KUMAR_YADAV.jpeg",
+    "resolved": true,
+    "note": "PDF name 'PANKAJ KUMAR YADAV' vs OCR name 'PAN AMARA'",
+    "resolution": "Verified as correct by admin"
+  },
+  {
+    "id": 171,
+    "name": "PARAS NATH JHA",
+    "ocr_name": "RAMATHHA",
+    "photo": "photos/00171_PARAS_NATH_JHA.jpeg",
+    "resolved": true,
+    "note": "PDF name 'PARAS NATH JHA' vs OCR name 'RAMATHHA'",
+    "resolution": "Verified as correct by admin"
+  },
+  {
+    "id": 175,
+    "name": "PRATIK JAIN",
+    "ocr_name": "G",
+    "photo": "photos/00175_PRATIK_JAIN.jpeg",
+    "resolved": true,
+    "note": "PDF name 'PRATIK JAIN' vs OCR name 'G'",
+    "resolution": "Verified as correct by admin"
+  },
+  {
+    "id": 178,
+    "name": "PRINCE KUMAR PODDAR",
+    "ocr_name": "KUMARPOD DAR",
+    "photo": "photos/00178_PRINCE_KUMAR_PODDAR.jpeg",
+    "resolved": true,
+    "note": "PDF name 'PRINCE KUMAR PODDAR' vs OCR name 'KUMARPOD DAR'",
+    "resolution": "Verified as correct by admin"
+  },
+  {
+    "id": 180,
+    "name": "PRIYANSHU NATH",
+    "ocr_name": "PRIVANSHNATH",
+    "photo": "photos/00180_PRIYANSHU_NATH.jpeg",
+    "resolved": true,
+    "note": "PDF name 'PRIYANSHU NATH' vs OCR name 'PRIVANSHNATH'",
+    "resolution": "Verified as correct by admin"
+  },
+  {
+    "id": 187,
+    "name": "RAVI GHOSH",
+    "ocr_name": "RAVIHOSH",
+    "photo": "photos/00187_RAVI_GHOSH.jpeg",
+    "resolved": true,
+    "note": "PDF name 'RAVI GHOSH' vs OCR name 'RAVIHOSH'",
+    "resolution": "Verified as correct by admin"
+  },
+  {
+    "id": 190,
+    "name": "ROUNAK KUNDU",
+    "ocr_name": "OUNAKKUNDU",
+    "photo": "photos/00190_ROUNAK_KUNDU.jpeg",
+    "resolved": true,
+    "note": "PDF name 'ROUNAK KUNDU' vs OCR name 'OUNAKKUNDU'",
+    "resolution": "Verified as correct by admin"
+  },
+  {
+    "id": 191,
+    "name": "SAHEB SARKAR",
+    "ocr_name": "ES",
+    "photo": "photos/00191_SAHEB_SARKAR.jpeg",
+    "resolved": true,
+    "note": "PDF name 'SAHEB SARKAR' vs OCR name 'ES'",
+    "resolution": "Verified as correct by admin"
+  },
+  {
+    "id": 192,
+    "name": "SANDEEP SHARMA",
+    "ocr_name": "SANDEEPSHARIA",
+    "photo": "photos/00192_SANDEEP_SHARMA.jpeg",
+    "resolved": true,
+    "note": "PDF name 'SANDEEP SHARMA' vs OCR name 'SANDEEPSHARIA'",
+    "resolution": "Verified as correct by admin"
+  },
+  {
+    "id": 194,
+    "name": "SAYONTO SANTRA",
+    "ocr_name": "SS",
+    "photo": "photos/00194_SAYONTO_SANTRA.jpeg",
+    "resolved": true,
+    "note": "PDF name 'SAYONTO SANTRA' vs OCR name 'SS'",
+    "resolution": "Verified as correct by admin"
+  },
+  {
+    "id": 195,
+    "name": "SHANI KUMAR SHARMA",
+    "ocr_name": "KA",
+    "photo": "photos/00195_SHANI_KUMAR_SHARMA.jpeg",
+    "resolved": true,
+    "note": "PDF name 'SHANI KUMAR SHARMA' vs OCR name 'KA'",
+    "resolution": "Verified as correct by admin"
+  },
+  {
+    "id": 196,
+    "name": "SHANTANU PRIYADARSHI",
+    "ocr_name": "SAPRIYRDARG",
+    "photo": "photos/00196_SHANTANU_PRIYADARSHI.jpeg",
+    "resolved": true,
+    "note": "PDF name 'SHANTANU PRIYADARSHI' vs OCR name 'SAPRIYRDARG'",
+    "resolution": "Verified as correct by admin"
+  },
+  {
+    "id": 197,
+    "name": "SHANU BHATTACHARYA",
+    "ocr_name": "SHANUBHATTACHARYA",
+    "photo": "photos/00197_SHANU_BHATTACHARYA.jpeg",
+    "resolved": true,
+    "note": "PDF name 'SHANU BHATTACHARYA' vs OCR name 'SHANUBHATTACHARYA'",
+    "resolution": "Verified as correct by admin"
+  },
+  {
+    "id": 202,
+    "name": "SHUBHODEEP BISWAS",
+    "ocr_name": "SHUBHODEEPBIWA",
+    "photo": "photos/00202_SHUBHODEEP_BISWAS.jpeg",
+    "resolved": true,
+    "note": "PDF name 'SHUBHODEEP BISWAS' vs OCR name 'SHUBHODEEPBIWA'",
+    "resolution": "Verified as correct by admin"
+  },
+  {
+    "id": 203,
+    "name": "SIDDHARTH KUMAR",
+    "ocr_name": "STHKA",
+    "photo": "photos/00203_SIDDHARTH_KUMAR.jpeg",
+    "resolved": true,
+    "note": "PDF name 'SIDDHARTH KUMAR' vs OCR name 'STHKA'",
+    "resolution": "Verified as correct by admin"
+  },
+  {
+    "id": 204,
+    "name": "SUBH SHRESTH",
+    "ocr_name": "SUBHSHIESTH",
+    "photo": "photos/00204_SUBH_SHRESTH.jpeg",
+    "resolved": true,
+    "note": "PDF name 'SUBH SHRESTH' vs OCR name 'SUBHSHIESTH'",
+    "resolution": "Verified as correct by admin"
+  },
+  {
+    "id": 206,
+    "name": "SUBHAM SAHA",
+    "ocr_name": "SUBHAMSAHA",
+    "photo": "photos/00206_SUBHAM_SAHA.jpeg",
+    "resolved": true,
+    "note": "PDF name 'SUBHAM SAHA' vs OCR name 'SUBHAMSAHA'",
+    "resolution": "Verified as correct by admin"
+  },
+  {
+    "id": 207,
+    "name": "SUMIT KUMAR SAHA",
+    "ocr_name": "SUNMSANA",
+    "photo": "photos/00207_SUMIT_KUMAR_SAHA.jpeg",
+    "resolved": true,
+    "note": "PDF name 'SUMIT KUMAR SAHA' vs OCR name 'SUNMSANA'",
+    "resolution": "Verified as correct by admin"
+  },
+  {
+    "id": 208,
+    "name": "SUSMIT DAS",
+    "ocr_name": "SUSMITDAS",
+    "photo": "photos/00208_SUSMIT_DAS.jpeg",
+    "resolved": true,
+    "note": "PDF name 'SUSMIT DAS' vs OCR name 'SUSMITDAS'",
+    "resolution": "Verified as correct by admin"
+  },
+  {
+    "id": 209,
+    "name": "UMANG AGARWAL",
+    "ocr_name": "UAAA",
+    "photo": "photos/00209_UMANG_AGARWAL.jpeg",
+    "resolved": true,
+    "note": "PDF name 'UMANG AGARWAL' vs OCR name 'UAAA'",
+    "resolution": "Verified as correct by admin"
+  }
+]

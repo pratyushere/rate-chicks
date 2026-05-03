@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Smash or Pass — Class IX 2020-21</title>
+  <meta name="description" content="Student interaction game for school project. For educational purposes only." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <!-- Privacy Notice Banner -->
+  <div id="privacyBanner">
+    <span class="banner-icon">🔒</span>
+    <p>This project is for educational purposes only. Data has been uploaded with student consent and school authority. All photos are handled locally.</p>
+    <button id="dismissBanner" aria-label="Dismiss notice">✕</button>
+  </div>
+
+  <!-- SCREEN 1: Track Selection -->
+  <section id="trackScreen" class="screen active">
+    <div class="bg-orbs">
+      <div class="orb orb-1"></div>
+      <div class="orb orb-2"></div>
+      <div class="orb orb-3"></div>
+    </div>
+    <div class="track-container">
+      <div class="logo">
+        <span class="logo-icon">💥</span>
+        <h1>Smash or Pass</h1>
+        <p class="logo-sub">Class IX · Bal Mandir Sr Sec School · 2020-21</p>
+      </div>
+
+      <div class="stats-bar" id="statsBar">
+        <div class="stat-item">
+          <span class="stat-num" id="statTotal">—</span>
+          <span class="stat-label">Total</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat-item">
+          <span class="stat-num" id="statMale">—</span>
+          <span class="stat-label">Boys</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat-item">
+          <span class="stat-num" id="statFemale">—</span>
+          <span class="stat-label">Girls</span>
+        </div>
+      </div>
+
+      <p class="choose-label">Choose your track</p>
+      <div class="track-cards">
+        <button class="track-card boys-card" id="trackBoys" onclick="selectTrack('Male')">
+          <div class="track-glow boys-glow"></div>
+          <div class="track-icon">⚡</div>
+          <div class="track-title">Boys</div>
+          <div class="track-count" id="boysCount">Loading…</div>
+          <div class="track-arrow">→</div>
+        </button>
+        <button class="track-card girls-card" id="trackGirls" onclick="selectTrack('Female')">
+          <div class="track-glow girls-glow"></div>
+          <div class="track-icon">✨</div>
+          <div class="track-title">Girls</div>
+          <div class="track-count" id="girlsCount">Loading…</div>
+          <div class="track-arrow">→</div>
+        </button>
+      </div>
+
+      <a href="admin.html" class="admin-link">Admin Dashboard →</a>
+    </div>
+  </section>
+
+  <!-- SCREEN 2: Game Screen -->
+  <section id="gameScreen" class="screen">
+    <div class="bg-orbs game-orbs">
+      <div class="orb orb-1"></div>
+      <div class="orb orb-2"></div>
+    </div>
+
+    <header class="game-header">
+      <button class="back-btn" onclick="goHome()" aria-label="Go back">← Back</button>
+      <div class="game-track-badge" id="gameBadge">Boys</div>
+      <div class="session-counter">
+        <span id="sessionCount">0</span> rated
+      </div>
+    </header>
+
+    <main class="game-main">
+      <!-- Card Deck -->
+      <div class="card-deck" id="cardDeck">
+        <div class="card-shadow"></div>
+
+        <!-- Loading state -->
+        <div class="student-card loading-card" id="loadingCard">
+          <div class="loading-shimmer"></div>
+          <div class="loading-name"></div>
+        </div>
+
+        <!-- Student card -->
+        <div class="student-card" id="studentCard" style="display:none;">
+          <div class="card-photo-wrap">
+            <img id="studentPhoto" src="" alt="Student photo" class="card-photo" />
+            <div class="photo-overlay"></div>
+          </div>
+          <div class="card-info">
+            <h2 class="student-name" id="studentName">—</h2>
+            <span class="student-badge" id="studentGenderBadge">Male</span>
+          </div>
+        </div>
+
+        <!-- Empty state -->
+        <div class="student-card empty-card" id="emptyCard" style="display:none;">
+          <div class="empty-icon">🎉</div>
+          <p class="empty-text">You've seen everyone!</p>
+          <button class="btn-reset" onclick="resetAndRestart()">Start Over</button>
+        </div>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="action-buttons" id="actionButtons">
+        <button class="action-btn pass-btn" id="passBtn" onclick="handleVote('pass')" aria-label="Pass">
+          <span class="btn-icon">✕</span>
+          <span class="btn-label">PASS</span>
+          <span class="btn-count" id="passCount">0</span>
+        </button>
+        <div class="btn-middle">
+          <button class="skip-btn" onclick="loadNext()" title="Skip">↷</button>
+        </div>
+        <button class="action-btn smash-btn" id="smashBtn" onclick="handleVote('smash')" aria-label="Smash">
+          <span class="btn-count" id="smashCount">0</span>
+          <span class="btn-label">SMASH</span>
+          <span class="btn-icon">♥</span>
+        </button>
+      </div>
+    </main>
+
+    <!-- Vote feedback overlay -->
+    <div class="vote-overlay" id="voteOverlay"></div>
+  </section>
+
+  <script src="js/app.js"></script>
+</body>
+</html>
