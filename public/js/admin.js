@@ -1,6 +1,9 @@
 /* admin.js — Enhanced Admin Dashboard v2 */
 
-const API = 'http://localhost:3500';
+// Admin requires the local server. Auto-detect: if on localhost use that,
+// otherwise show a "server required" warning.
+const IS_LOCAL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+const API = IS_LOCAL ? `http://localhost:3500` : null;
 const ADMIN_PASS_KEY = 'sop_admin_auth';
 
 let allStudents   = [];
@@ -18,6 +21,18 @@ let uploadFile = null;
 
 // ── Auth ─────────────────────────────────────────────────────────────────
 window.addEventListener('DOMContentLoaded', () => {
+    // If not on localhost, show server-required notice and stop
+    if (!IS_LOCAL) {
+        document.getElementById('loginOverlay').innerHTML = `
+          <div class="login-box" style="text-align:center;gap:1.2rem">
+            <div style="font-size:3rem">🖥️</div>
+            <h1 class="login-title">Local Server Required</h1>
+            <p class="login-sub">The Admin Dashboard requires the Node.js server running on your computer. Open <strong>http://localhost:3500/admin.html</strong> instead.</p>
+            <a href="/" class="back-to-app" style="margin-top:.5rem">← Back to Game</a>
+          </div>`;
+        return;
+    }
+
     const saved = sessionStorage.getItem(ADMIN_PASS_KEY);
     if (saved) { adminPassword = saved; unlockDashboard(); }
 
@@ -182,7 +197,7 @@ function renderTable() {
         const isFlagged = s.ocr_match === false;
 
         const photoCell = s.photo
-            ? `<img class="admin-photo" src="${API}/data/${s.photo}" alt="${s.name}" loading="lazy" />`
+            ? `<img class="admin-photo" src="/data/${s.photo}" alt="${s.name}" loading="lazy" />`
             : `<div class="no-photo">👤</div>`;
 
         const nameContent = isFlagged
@@ -254,7 +269,7 @@ function renderDiscrepancies() {
 
     list.innerHTML = items.map(d => {
         const student    = allStudents.find(s => s.id === d.id);
-        const photoSrc   = student?.photo ? `${API}/data/${student.photo}` : '';
+        const photoSrc   = student?.photo ? `/data/${student.photo}` : '';
         const statusClass = d.resolved ? 'discrep-resolved' : 'discrep-open';
 
         return `<div class="discrep-card ${statusClass}" id="dc-${d.id}">
