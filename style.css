@@ -76,7 +76,7 @@ html, body {
   min-height: 100vh;
   display: none;
   position: relative;
-  overflow: hidden;
+  /* overflow removed for scrolling */
 }
 .screen.active { display: flex; }
 
@@ -105,7 +105,7 @@ html, body {
 }
 
 /* ── Track Selection Screen ───────────────────────────────────── */
-#trackScreen { flex-direction: column; align-items: center; justify-content: center; padding: 2rem; }
+#trackScreen { flex-direction: column; align-items: center; justify-content: flex-start; padding: 4rem 2rem 2rem; }
 .track-container { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; gap: 2.5rem; max-width: 480px; width: 100%; }
 
 .logo { text-align: center; }
@@ -389,17 +389,17 @@ html, body {
 
 /* ── Search Section ───────────────────────────────────────────── */
 .search-section {
-  width: 100%; max-width: 480px; margin-top: 1rem; position: relative;
+  width: 100%; max-width: 480px; position: sticky; top: 1rem;
   z-index: 100;
 }
 .main-search-wrap {
   display: flex; align-items: center; gap: 0.8rem;
-  background: var(--surface); border: 1px solid var(--border);
+  background: rgba(0,0,0,0.85); border: 2px solid var(--border-glow); backdrop-filter: blur(8px);
   border-radius: var(--radius-lg); padding: 0.9rem 1.2rem;
   transition: border-color var(--transition), box-shadow var(--transition);
 }
 .main-search-wrap:focus-within {
-  border-color: var(--boys-from); box-shadow: 0 0 0 3px rgba(108,99,255,0.15);
+  border-color: var(--boys-from); box-shadow: 0 0 15px rgba(108,99,255,0.25);
 }
 .main-search-icon { font-size: 1.1rem; opacity: 0.6; }
 .main-search-wrap input {
