@@ -1,8 +1,8 @@
-/* ══════════════════════════════════════════════════════════════════
-   style.css — Smash or Pass · Premium Dark Design System
-   ══════════════════════════════════════════════════════════════════ */
+﻿/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+   style.css â€” Smash or Pass Â· Premium Dark Design System
+   â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
 
-/* ── Reset & Root ─────────────────────────────────────────────── */
+/* â”€â”€ Reset & Root â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
@@ -45,7 +45,7 @@ html, body {
   overflow-x: hidden;
 }
 
-/* ── Privacy Banner ───────────────────────────────────────────── */
+/* â”€â”€ Privacy Banner â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 #privacyBanner {
   position: fixed;
   top: 0; left: 0; right: 0;
@@ -71,7 +71,7 @@ html, body {
 }
 #dismissBanner:hover { color: var(--text); }
 
-/* ── Screens ──────────────────────────────────────────────────── */
+/* â”€â”€ Screens â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 .screen {
   min-height: 100vh;
   display: none;
@@ -80,7 +80,7 @@ html, body {
 }
 .screen.active { display: flex; }
 
-/* ── Background Orbs ──────────────────────────────────────────── */
+/* â”€â”€ Background Orbs â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 .bg-orbs {
   position: absolute;
   inset: 0;
@@ -104,7 +104,7 @@ html, body {
   to   { transform: translate(30px, 20px) scale(1.08); }
 }
 
-/* ── Track Selection Screen ───────────────────────────────────── */
+/* â”€â”€ Track Selection Screen â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 #trackScreen { flex-direction: column; align-items: center; justify-content: flex-start; padding: 4rem 2rem 2rem; }
 .track-container { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; gap: 2.5rem; max-width: 480px; width: 100%; }
 
@@ -183,7 +183,7 @@ html, body {
 }
 .admin-link:hover { color: var(--text); }
 
-/* ── Game Screen ──────────────────────────────────────────────── */
+/* â”€â”€ Game Screen â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 #gameScreen { flex-direction: column; }
 .game-orbs .orb-1 { animation-delay: 1s; }
 .game-orbs .orb-2 { animation-delay: 3s; }
@@ -223,7 +223,7 @@ html, body {
   gap: 2.5rem;
 }
 
-/* ── Student Card ─────────────────────────────────────────────── */
+/* â”€â”€ Student Card â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 .card-deck { position: relative; width: 100%; max-width: 320px; }
 .card-shadow {
   position: absolute;
@@ -261,6 +261,9 @@ html, body {
   position: absolute; bottom: 0; left: 0; right: 0;
   padding: 1.2rem 1.2rem 1rem;
   display: flex; flex-direction: column; gap: 0.4rem;
+  background: rgba(10,10,20,0.55);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
 }
 .student-name {
   font-family: var(--font-display); font-size: 1.25rem; font-weight: 700;
@@ -313,17 +316,17 @@ html, body {
 }
 .btn-reset:hover { transform: scale(1.05); opacity: 0.9; }
 
-/* ── Action Buttons ───────────────────────────────────────────── */
+/* â”€â”€ Action Buttons â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 .action-buttons {
   display: flex; align-items: center; justify-content: center;
-  gap: 1rem; width: 100%; max-width: 380px;
+  gap: 1.2rem; width: 100%; max-width: 500px; padding: 0 1rem;
 }
 .action-btn {
-  flex: 1; display: flex; align-items: center; gap: 0.6rem;
-  padding: 1rem 1.2rem;
-  border: none; border-radius: var(--radius-md);
+  flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.3rem;
+  padding: 1.1rem 0.6rem;
+  border: 1px solid transparent; border-radius: var(--radius-md);
   cursor: pointer; font-family: var(--font);
-  font-weight: 700; font-size: 0.9rem; letter-spacing: 0.04em;
+  font-weight: 800; font-size: 0.75rem; letter-spacing: 1.5px; text-transform: uppercase;
   transition: transform var(--transition), box-shadow var(--transition), opacity var(--transition);
   position: relative; overflow: hidden;
 }
@@ -333,7 +336,7 @@ html, body {
   transition: opacity 0.15s;
 }
 .action-btn:active::after { opacity: 0.1; }
-.action-btn:hover { transform: scale(1.04); }
+.action-btn:hover { transform: translateY(-5px); }
 .action-btn:active { transform: scale(0.96); }
 
 .pass-btn  { background: linear-gradient(135deg, #1c2e2a, #163b34); color: var(--pass); border: 1px solid rgba(78,204,163,0.25); }
@@ -341,8 +344,8 @@ html, body {
 .pass-btn:hover  { box-shadow: 0 0 24px rgba(78,204,163,0.3); border-color: rgba(78,204,163,0.5); }
 .smash-btn:hover { box-shadow: 0 0 24px rgba(255,77,109,0.3); border-color: rgba(255,77,109,0.5); }
 
-.btn-icon  { font-size: 1.1rem; }
-.btn-label { flex: 1; text-align: center; }
+.btn-icon  { font-size: 1.5rem; display: block; }
+.btn-label { display: block; }
 .btn-count { font-size: 0.75rem; opacity: 0.65; min-width: 20px; text-align: center; }
 
 .btn-middle { display: flex; align-items: center; justify-content: center; }
@@ -355,7 +358,7 @@ html, body {
 }
 .skip-btn:hover { color: var(--text); border-color: var(--border-glow); transform: rotate(20deg); }
 
-/* ── Vote Overlay (feedback flash) ───────────────────────────── */
+/* â”€â”€ Vote Overlay (feedback flash) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 .vote-overlay {
   position: fixed; inset: 0;
   pointer-events: none; z-index: 999;
@@ -365,6 +368,7 @@ html, body {
 }
 .vote-overlay.flash-smash { opacity: 1; background: radial-gradient(ellipse at center, rgba(255,77,109,0.18) 0%, transparent 70%); }
 .vote-overlay.flash-pass  { opacity: 1; background: radial-gradient(ellipse at center, rgba(78,204,163,0.18) 0%, transparent 70%); }
+.vote-overlay.flash-crack { opacity: 1; background: radial-gradient(ellipse at center, rgba(255,215,0,0.18) 0%, transparent 70%); }
 
 /* Card swipe-out animation */
 @keyframes swipeLeft {
@@ -381,13 +385,13 @@ html, body {
 .swipe-right { animation: swipeRight 0.38s ease forwards; }
 .fade-up     { animation: fadeUp     0.35s ease forwards; }
 
-/* ── Responsive ───────────────────────────────────────────────── */
+/* â”€â”€ Responsive â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 @media (max-width: 400px) {
   .track-cards { grid-template-columns: 1fr; }
   .action-btn  { padding: 0.8rem 0.8rem; font-size: 0.82rem; }
 }
 
-/* ── Search Section ───────────────────────────────────────────── */
+/* â”€â”€ Search Section â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 .search-section {
   width: 100%; max-width: 480px; position: sticky; top: 1rem;
   z-index: 100;
@@ -445,7 +449,7 @@ html, body {
 .status-available { color: var(--pass); }
 .status-hidden { color: var(--smash); }
 
-/* ── Mega-Merge Additions ─────────────────────────────────────── */
+/* â”€â”€ Mega-Merge Additions â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 .crack-btn { border-color: rgba(255, 215, 0, 0.4); }
 .crack-btn .btn-icon { color: #ffd700; font-size: 1.4rem; }
 .crack-btn .btn-count { background: rgba(255, 215, 0, 0.15); color: #ffd700; }
@@ -515,3 +519,75 @@ html, body {
     grid-template-columns: 1fr;
   }
 }
+
+/* -- Welcome Modal --------------------------------------------- */
+.welcome-modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0,0,0,0.75);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+.welcome-modal-box {
+  background: #111118;
+  border: 1px solid rgba(108,99,255,0.4);
+  border-radius: 24px;
+  padding: 2.5rem 2rem;
+  width: 90%;
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  box-shadow: 0 0 60px rgba(108,99,255,0.2), 0 30px 60px rgba(0,0,0,0.6);
+  text-align: center;
+}
+.welcome-modal-box h2 {
+  font-family: var(--font-display);
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: #F0F0F0;
+  letter-spacing: -0.03em;
+}
+.welcome-modal-box p {
+  color: rgba(240,240,248,0.55);
+  font-size: 0.9rem;
+  line-height: 1.6;
+  margin: 0;
+}
+.welcome-modal-box input {
+  width: 100%;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 12px;
+  padding: 0.9rem 1.2rem;
+  font-family: var(--font);
+  font-size: 1rem;
+  color: #F0F0F0;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.welcome-modal-box input:focus {
+  border-color: rgba(108,99,255,0.6);
+  box-shadow: 0 0 0 3px rgba(108,99,255,0.12);
+}
+.welcome-modal-box input::placeholder { color: rgba(240,240,248,0.3); }
+.welcome-start-btn {
+  width: 100%;
+  padding: 0.9rem;
+  background: linear-gradient(135deg, var(--boys-from), var(--boys-to));
+  border: none;
+  border-radius: 12px;
+  color: white;
+  font-family: var(--font);
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  transition: opacity 0.2s, transform 0.2s;
+}
+.welcome-start-btn:hover { opacity: 0.9; transform: scale(1.02); }
+.welcome-start-btn:active { transform: scale(0.97); }

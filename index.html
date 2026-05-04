@@ -4,8 +4,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>still better than asking nitrate.</title>
-  <meta name="description" content="rate chicks here." />
+  <title>Smash, Pass, or Crack? — Class IX Edition</title>
+  <meta name="description" content="A fun, interactive interaction game for our school project. Vote and see your summary at the end!" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
@@ -16,14 +16,12 @@
 
 <body>
   <!-- Welcome Modal -->
-  <div class="modal-overlay" id="welcomeModal" style="display:none; z-index:9999; backdrop-filter: blur(10px);">
-    <div class="modal-box" style="background: #1a1a26; border: 1px solid rgba(255,255,255,0.15);">
-      <h3 class="modal-title" style="color: #F0F0F0;">Welcome to Smash or Pass</h3>
-      <p class="modal-sub" style="color: rgba(240,240,240,0.7);">Please enter your name to start.</p>
-      <input type="text" id="usernameInput" class="modal-input" placeholder="Your Name..." style="background: #0a0a0f; color: #F0F0F0; border: 1px solid rgba(255,255,255,0.2);" />
-      <div class="modal-actions" style="margin-top: 1.5rem;">
-        <button class="modal-btn-save" onclick="startApp()" style="background: #4ecca3; color: #000; width: 100%;">Start</button>
-      </div>
+  <div class="welcome-modal-overlay" id="welcomeModal" style="display:none;">
+    <div class="welcome-modal-box">
+      <h2>Welcome 👋</h2>
+      <p>Drop your name below to start voting on your classmates.</p>
+      <input type="text" id="usernameInput" placeholder="Your name..." maxlength="30" onkeydown="if(event.key==='Enter') startApp()" />
+      <button class="welcome-start-btn" onclick="startApp()">Let's Go →</button>
     </div>
   </div>
 
