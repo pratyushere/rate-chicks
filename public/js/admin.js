@@ -1,9 +1,16 @@
 /* admin.js — Enhanced Admin Dashboard v2 */
 
-// Admin requires the local server. Auto-detect: if on localhost use that,
-// otherwise show a "server required" warning.
+// Admin server API (for mutations like uploading photos)
 const IS_LOCAL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
 const API = IS_LOCAL ? `http://localhost:3500` : null;
+const ADMIN_PASS_KEY = 'sop_admin_auth';
+
+// ── Base path detection ───────────────────────────────────────────────────
+const BASE = (() => {
+    const src = (document.currentScript?.src || '');
+    const base = src.replace(/\/public\/js\/admin\.js.*$/, '');
+    return base || window.location.origin;
+})();
 const ADMIN_PASS_KEY = 'sop_admin_auth';
 
 let allStudents   = [];
@@ -30,51 +37,7 @@ let uploadFile = null;
 
 // ── Auth ─────────────────────────────────────────────────────────────────
 window.addEventListener('DOMContentLoaded', () => {
-    // If not on localhost, show a fully self-contained server-required notice
-    if (!IS_LOCAL) {
-        // Apply dark background directly to body so it's visible even if CSS fails to load
-        document.body.style.cssText = 'margin:0;min-height:100vh;background:#0a0a0f;display:flex;align-items:center;justify-content:center;font-family:system-ui,sans-serif;';
-        document.getElementById('loginOverlay').style.cssText = 'position:static;display:flex;align-items:center;justify-content:center;width:100%;';
-        document.getElementById('loginOverlay').innerHTML = `
-          <div style="
-            text-align:center; padding:2.5rem 2rem;
-            background:#12121a; border:1px solid rgba(255,255,255,0.1);
-            border-radius:24px; max-width:460px; width:90%;
-            display:flex; flex-direction:column; align-items:center; gap:1.2rem;
-            box-shadow:0 24px 80px rgba(0,0,0,0.6);
-          ">
-            <div style="font-size:3rem">🖥️</div>
-            <h1 style="color:#f0f0f8;font-size:1.5rem;font-weight:800;margin:0;letter-spacing:-0.02em">
-              Admin Requires Local Server
-            </h1>
-            <p style="color:rgba(240,240,248,0.55);font-size:0.88rem;line-height:1.7;margin:0">
-              The admin dashboard needs the Node.js server running on your machine.
-              Start it with:
-            </p>
-            <code style="
-              background:rgba(108,99,255,0.12); border:1px solid rgba(108,99,255,0.3);
-              padding:0.5rem 1.2rem; border-radius:10px;
-              color:#a5a0ff; font-size:0.9rem; font-family:monospace;
-            ">npm start</code>
-            <p style="color:rgba(240,240,248,0.55);font-size:0.88rem;margin:0">
-              Then open in your browser:
-            </p>
-            <code style="
-              background:rgba(61,142,255,0.1); border:1px solid rgba(61,142,255,0.25);
-              padding:0.5rem 1.2rem; border-radius:10px;
-              color:#7ab8ff; font-size:0.85rem; font-family:monospace; word-break:break-all;
-            ">http://localhost:3500/admin.html</code>
-            <a href="index.html" style="
-              color:rgba(240,240,248,0.4); text-decoration:none;
-              font-size:0.82rem; margin-top:0.3rem;
-              transition:color 0.2s;
-            " onmouseover="this.style.color='rgba(240,240,248,0.8)'"
-               onmouseout="this.style.color='rgba(240,240,248,0.4)'">
-              ← Back to Game
-            </a>
-          </div>`;
-        return;
-    }
+
 
     const saved = sessionStorage.getItem(ADMIN_PASS_KEY);
     if (saved) { adminPassword = saved; unlockDashboard(); }
@@ -96,7 +59,9 @@ window.addEventListener('DOMContentLoaded', () => {
 function handleLogin(e) {
     e.preventDefault();
     const pwd = document.getElementById('passwordInput').value;
-    fetch(`${API}/api/students`)
+    const url = IS_LOCAL ? `${API}/api/students` : `${BASE}/data/students.json`;
+    
+    fetch(url)
         .then(() => {
             if (pwd === 'admin123') {
                 adminPassword = pwd;
@@ -148,7 +113,8 @@ async function loadAll() {
 
 async function loadStudents() {
     try {
-        const res = await fetch(`${API}/api/students`);
+        const url = IS_LOCAL ? `${API}/api/students` : `${BASE}/data/students.json`;
+        const res = await fetch(url);
         allStudents = await res.json();
         renderTable();
         updateHeaderStats();
@@ -160,7 +126,8 @@ async function loadStudents() {
 
 async function loadDiscrepancies() {
     try {
-        const res = await fetch(`${API}/api/discrepancies`);
+        const url = IS_LOCAL ? `${API}/api/discrepancies` : `${BASE}/data/discrepancies.json`;
+        const res = await fetch(url);
         discrepancies = await res.json();
         updateFixitBadge();
     } catch { discrepancies = []; }
@@ -243,7 +210,7 @@ function renderTable() {
         const isFlagged = s.ocr_match === false;
 
         const photoCell = s.photo
-            ? `<img class="admin-photo" src="/data/${s.photo}" alt="${s.name}" loading="lazy" />`
+            ? `<img class="admin-photo" src="${BASE}/data/${s.photo}" alt="${s.name}" loading="lazy" />`
             : `<div class="no-photo">👤</div>`;
 
         const nameContent = isFlagged
@@ -312,7 +279,7 @@ function renderDiscrepancies() {
 
     list.innerHTML = items.map(d => {
         const student    = allStudents.find(s => s.id === d.id);
-        const photoSrc   = student?.photo ? `/data/${student.photo}` : '';
+        const photoSrc   = student?.photo ? `${BASE}/data/${student.photo}` : '';
         const statusClass = d.resolved ? 'discrep-resolved' : 'discrep-open';
 
         return `<div class="discrep-card ${statusClass}" id="dc-${d.id}">
@@ -346,6 +313,7 @@ function renderDiscrepancies() {
 }
 
 async function markResolved(id) {
+    if (!IS_LOCAL) { alert('This feature requires the local Node.js server. Please run `npm start`.'); return; }
     try {
         await fetch(`${API}/api/discrepancies/${id}/resolve`, {
             method: 'PATCH',
@@ -375,6 +343,7 @@ function closeEditModal(e) {
 }
 
 async function saveNameEdit() {
+    if (!IS_LOCAL) { alert('This feature requires the local Node.js server. Please run `npm start`.'); return; }
     const newName = document.getElementById('editNameInput').value.trim();
     if (!newName || !editingStudentId) return;
     try {
@@ -431,6 +400,7 @@ function setUploadFile(file) {
 }
 
 async function submitPhotoUpload() {
+    if (!IS_LOCAL) { alert('This feature requires the local Node.js server. Please run `npm start`.'); return; }
     if (!uploadFile || !uploadingStudentId) return;
     const btn = document.getElementById('uploadBtn');
     btn.textContent = 'Uploading…'; btn.disabled = true;
