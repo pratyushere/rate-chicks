@@ -20,6 +20,8 @@ let searchQuery   = '';
 let adminPassword = '';
 
 const LS_HIDDEN = 'sop_hidden_ids';
+const LS_EDITS  = 'student_edits';
+
 function getHiddenIds() {
     try { return JSON.parse(localStorage.getItem(LS_HIDDEN) || '[]'); }
     catch { return []; }
@@ -28,8 +30,17 @@ function setHiddenIds(ids) {
     localStorage.setItem(LS_HIDDEN, JSON.stringify(ids));
 }
 
+function getStudentEdits() {
+    try { return JSON.parse(localStorage.getItem(LS_EDITS) || '{}'); }
+    catch { return {}; }
+}
+function setStudentEdits(edits) {
+    localStorage.setItem(LS_EDITS, JSON.stringify(edits));
+}
+
 // Edit modal state
 let editingStudentId = null;
+let generalEditingId = null;
 // Upload modal state
 let uploadingStudentId = null;
 let uploadFile = null;
@@ -205,17 +216,22 @@ function renderTable() {
 
     document.getElementById('adminTableBody').innerHTML = students.map(s => {
         const hiddenIds = getHiddenIds();
+        const edits = getStudentEdits();
+        
         const isHidden = s.active === false || hiddenIds.includes(s.id);
         const isFlagged = s.ocr_match === false;
 
-        const photoCell = s.photo
-            ? `<img class="admin-photo" src="${BASE}/data/${s.photo}" alt="${s.name}" loading="lazy" />`
+        const currentName = edits[s.id] ? (edits[s.id].name || s.name) : s.name;
+        const currentPhoto = edits[s.id] ? (edits[s.id].photo || s.photo) : s.photo;
+
+        const photoCell = currentPhoto
+            ? `<img class="admin-photo" src="${BASE}/data/${currentPhoto}" alt="${currentName}" loading="lazy" />`
             : `<div class="no-photo">👤</div>`;
 
         const nameContent = isFlagged
-            ? `<span class="student-name-cell">${toTitleCase(s.name)}</span>
+            ? `<span class="student-name-cell">${toTitleCase(currentName)}</span>
                <span class="ocr-flag" title="OCR name: ${s.ocr_name || '?'}">⚠ OCR mismatch</span>`
-            : `<span class="student-name-cell ${isHidden ? 'hidden-name' : ''}">${toTitleCase(s.name)}</span>`;
+            : `<span class="student-name-cell ${isHidden ? 'hidden-name' : ''}">${toTitleCase(currentName)}</span>`;
 
         const statusBadge = !isHidden
             ? '<span class="status-badge active">Active</span>'
@@ -224,6 +240,8 @@ function renderTable() {
         const actionBtn = !isHidden
             ? `<button class="btn-toggle btn-remove" onclick="toggleStudent(${s.id}, false)">Hide</button>`
             : `<button class="btn-toggle btn-restore" onclick="toggleStudent(${s.id}, true)">Unhide</button>`;
+            
+        const editBtn = `<button class="btn-toggle" style="margin-left: 5px; background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.2);" onclick="openGeneralEditModal(${s.id})">Edit</button>`;
 
         return `<tr id="row-${s.id}" class="${isFlagged ? 'flagged-row' : ''}" style="${isHidden ? 'opacity: 0.4;' : ''}">
           <td class="num-col">${s.id.toString().padStart(5,'0')}</td>
@@ -231,7 +249,7 @@ function renderTable() {
           <td class="name-cell">${nameContent}</td>
           <td><span class="gender-badge ${s.gender.toLowerCase()}">${s.gender}</span></td>
           <td>${statusBadge}</td>
-          <td class="action-cell">${actionBtn}</td>
+          <td class="action-cell">${actionBtn}${editBtn}</td>
         </tr>`;
     }).join('');
 }
@@ -333,15 +351,52 @@ async function markResolved(id) {
         await fetch(`${API}/api/discrepancies/${id}/resolve`, {
             method: 'PATCH',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ password: adminPassword, note: 'Verified as correct by admin' })
+            body: JSON.stringify({ password: adminPassword })
         });
-        const d = discrepancies.find(d => d.id === id);
-        if (d) { d.resolved = true; d.resolution = 'Verified as correct by admin'; }
-        renderDiscrepancies(); updateFixitBadge(); updateHeaderStats();
-    } catch { alert('Failed to update.'); }
+        const idx = discrepancies.findIndex(d => d.id === id);
+        if (idx !== -1) discrepancies[idx].resolved = true;
+        renderDiscrepancies();
+        updateFixitBadge();
+    } catch { alert('Failed to resolve. Server disconnected.'); }
 }
 
-// ── Edit Name Modal ────────────────────────────────────────────────────────
+// ── General Edit (Local Storage) ──────────────────────────────────────────
+function openGeneralEditModal(id) {
+    const student = allStudents.find(s => s.id === id);
+    if (!student) return;
+    generalEditingId = id;
+    const edits = getStudentEdits();
+    
+    document.getElementById('generalEditSub').textContent = `SL#${String(id).padStart(5,'0')}`;
+    document.getElementById('generalEditName').value = edits[id]?.name || student.name || '';
+    document.getElementById('generalEditPhoto').value = edits[id]?.photo || student.photo || '';
+    
+    document.getElementById('generalEditModal').style.display = 'flex';
+}
+
+function closeGeneralEditModal(e) {
+    if (e && e.target !== document.getElementById('generalEditModal')) return;
+    document.getElementById('generalEditModal').style.display = 'none';
+    generalEditingId = null;
+}
+
+function saveGeneralEdit() {
+    if (!generalEditingId) return;
+    const newName = document.getElementById('generalEditName').value.trim();
+    const newPhoto = document.getElementById('generalEditPhoto').value.trim();
+    
+    const edits = getStudentEdits();
+    if (!edits[generalEditingId]) edits[generalEditingId] = {};
+    
+    if (newName) edits[generalEditingId].name = newName;
+    if (newPhoto) edits[generalEditingId].photo = newPhoto;
+    
+    setStudentEdits(edits);
+    closeGeneralEditModal();
+    renderTable();
+}
+
+// ── Modals & Forms (Server Edit) ──────────────────────────────────────────
 function openEditModal(id) {
     editingStudentId = id;
     const s = allStudents.find(s => s.id === id);

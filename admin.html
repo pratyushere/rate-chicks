@@ -153,6 +153,20 @@
     </div>
   </div>
 
+  <!-- ── General Edit Modal (Local Storage) ─────────────────────── -->
+  <div class="modal-overlay" id="generalEditModal" style="display:none;" onclick="closeGeneralEditModal(event)">
+    <div class="modal-box" style="background: #1a1a26; border: 1px solid rgba(255,255,255,0.15);">
+      <h3 class="modal-title" style="color: #fff;">Edit Student (Local)</h3>
+      <p class="modal-sub" id="generalEditSub" style="color: rgba(255,255,255,0.7);">SL#00001</p>
+      <input type="text" id="generalEditName" class="modal-input" placeholder="Student Name" style="background: #0a0a0f; color: #fff; border: 1px solid rgba(255,255,255,0.2);" />
+      <input type="text" id="generalEditPhoto" class="modal-input" placeholder="Photo Path (e.g., photos/new.jpg)" style="background: #0a0a0f; color: #fff; border: 1px solid rgba(255,255,255,0.2); margin-top: 10px;" />
+      <div class="modal-actions" style="margin-top: 1.5rem;">
+        <button class="modal-btn-cancel" onclick="closeGeneralEditModal()" style="color: #fff; border-color: rgba(255,255,255,0.3);">Cancel</button>
+        <button class="modal-btn-save" onclick="saveGeneralEdit()" style="background: #4ecca3; color: #000;">Save Locally</button>
+      </div>
+    </div>
+  </div>
+
   <script src="public/js/admin.js"></script>
 </body>
 </html>

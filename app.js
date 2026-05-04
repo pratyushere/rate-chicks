@@ -9,14 +9,21 @@ const BASE = (() => {
 
 // ── LocalStorage helpers ──────────────────────────────────────────────────
 const LS_HIDDEN = 'sop_hidden_ids';
+const LS_EDITS  = 'student_edits';
+
 function getHiddenIds() {
     try { return JSON.parse(localStorage.getItem(LS_HIDDEN) || '[]'); }
     catch { return []; }
 }
+function getStudentEdits() {
+    try { return JSON.parse(localStorage.getItem(LS_EDITS) || '{}'); }
+    catch { return {}; }
+}
 
 // ── Student store ─────────────────────────────────────────────────────────
-let ALL_STUDENTS_RAW = [];  // every student from JSON (for search)
-let ALL_STUDENTS     = [];  // active only (for game)
+let ALL_STUDENTS_ORIGINAL = []; // untouched JSON data
+let ALL_STUDENTS_RAW      = []; // with local edits applied (for search)
+let ALL_STUDENTS          = []; // active only (for game)
 let loaded = false;
 
 // ── Init ──────────────────────────────────────────────────────────────────
@@ -31,7 +38,9 @@ async function loadAllStudents() {
     try {
         const res = await fetch(`${BASE}/data/students.json`);
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
-        ALL_STUDENTS_RAW = await res.json();
+        const raw = await res.json();
+        ALL_STUDENTS_ORIGINAL = [...raw];
+        applyEdits();
         refreshActivePool();
         loaded = true;
         updateHomeStats();
@@ -45,6 +54,17 @@ async function loadAllStudents() {
         document.getElementById('boysCount').textContent  = 'Load error';
         document.getElementById('girlsCount').textContent = 'Load error';
     }
+}
+
+function applyEdits() {
+    const edits = getStudentEdits();
+    ALL_STUDENTS_RAW = ALL_STUDENTS_ORIGINAL.map(s => {
+        if (edits[s.id]) {
+            return { ...s, name: edits[s.id].name || s.name, photo: edits[s.id].photo || s.photo };
+        }
+        return s;
+    });
+    refreshActivePool();
 }
 
 function getVisibleStudents() {
@@ -70,8 +90,13 @@ function updateHomeStats() {
 
 // ── Real-time Sync ────────────────────────────────────────────────────────
 window.addEventListener('storage', e => {
-    if (e.key === LS_HIDDEN) {
-        refreshActivePool();
+    if (e.key === LS_HIDDEN || e.key === LS_EDITS) {
+        if (e.key === LS_EDITS) {
+            applyEdits();
+        } else {
+            refreshActivePool();
+        }
+        
         updateHomeStats();
         
         // Refresh search if active
@@ -87,6 +112,13 @@ window.addEventListener('storage', e => {
             // If current student was just hidden, move to next instantly
             if (currentStudent && hiddenIds.includes(currentStudent.id)) {
                 loadNext();
+            } else if (currentStudent && e.key === LS_EDITS) {
+                // if we edited the current student, re-render them
+                const updated = ALL_STUDENTS_RAW.find(s => s.id === currentStudent.id);
+                if (updated) {
+                    currentStudent = updated;
+                    renderStudent(currentStudent);
+                }
             }
         }
     }
