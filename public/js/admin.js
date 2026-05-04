@@ -11,7 +11,6 @@ const BASE = (() => {
     const base = src.replace(/\/public\/js\/admin\.js.*$/, '');
     return base || window.location.origin;
 })();
-const ADMIN_PASS_KEY = 'sop_admin_auth';
 
 let allStudents   = [];
 let discrepancies = [];
@@ -237,7 +236,7 @@ function renderTable() {
     }).join('');
 }
 
-function toggleStudent(id, activeState) {
+async function toggleStudent(id, activeState) {
     let hiddenIds = getHiddenIds();
     if (!activeState) {
         if (!hiddenIds.includes(id)) hiddenIds.push(id);
@@ -247,6 +246,22 @@ function toggleStudent(id, activeState) {
     setHiddenIds(hiddenIds);
     renderTable(); 
     updateHeaderStats();
+
+    // If running on local server, also persist this globally to students.json
+    if (IS_LOCAL) {
+        try {
+            await fetch(`${API}/api/students/${id}`, {
+                method: 'PATCH',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ password: adminPassword, active: activeState })
+            });
+            // Update local memory as well so filters work properly
+            const idx = allStudents.findIndex(s => s.id === id);
+            if (idx !== -1) allStudents[idx].active = activeState;
+        } catch (e) {
+            console.error('Failed to sync hide status to server.', e);
+        }
+    }
 }
 
 // ── Discrepancies (Fix-it Tab) ─────────────────────────────────────────────
