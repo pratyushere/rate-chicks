@@ -391,7 +391,7 @@ function finishGame() {
     const rs = document.getElementById('resultsScreen');
     rs.style.display = 'block';
     
-    const username = localStorage.getItem('username') || 'Player';
+    const username = sessionStorage.getItem('username') || 'Player';
     document.getElementById('resultsTitle').textContent = `Game Summary for ${username}`;
     
     const votes = getSessionVotes();
