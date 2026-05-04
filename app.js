@@ -375,48 +375,7 @@ function showEmpty() {
     document.getElementById('actionButtons').style.opacity      = '0.3';
     document.getElementById('actionButtons').style.pointerEvents = 'none';
 }
-function showSavingToast(msg, isError = false) {
-    let toast = document.getElementById('cloudToast');
-    if (!toast) {
-        toast = document.createElement('div');
-        toast.id = 'cloudToast';
-        toast.style.cssText = `
-            position: fixed; bottom: 2rem; left: 50%; transform: translateX(-50%);
-            background: #1a1a26; border: 1px solid rgba(108,99,255,0.4);
-            color: #F0F0F0; padding: 0.8rem 1.6rem; border-radius: 12px;
-            font-family: var(--font); font-size: 0.9rem; font-weight: 600;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.5); z-index: 9998;
-            display: flex; align-items: center; gap: 0.6rem;
-            transition: opacity 0.3s;
-        `;
-        document.body.appendChild(toast);
-    }
-    toast.style.borderColor = isError ? 'rgba(255,77,109,0.4)' : 'rgba(108,99,255,0.4)';
-    toast.textContent = msg;
-    toast.style.opacity = '1';
-    return toast;
-}
-async function uploadGameData(username, lists) {
-    const payload = {
-        username,
-        timestamp: new Date().toISOString(),
-        smashed: lists.smash.map(s => toTitleCase(s.name)),
-        cracked: lists.crack.map(s => toTitleCase(s.name)),
-        passed:  lists.pass.map(s => toTitleCase(s.name)),
-    };
-    try {
-        await fetch(GOOGLE_SHEET_URL, {
-            method: 'POST',
-            mode: 'no-cors',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(payload)
-        });
-        return true;
-    } catch (e) {
-        console.error('Sheet upload failed:', e);
-        return false;
-    }
-}
+
 function updateCounters() {
     document.getElementById('smashCount').textContent   = smashCount;
     const crackEl = document.getElementById('crackCount');
@@ -464,31 +423,19 @@ async function finishGame() {
     document.getElementById('listCracked').innerHTML = lists.crack.map(renderCard).join('') || '<p style="color:#666;text-align:center;">None</p>';
     document.getElementById('listPassed').innerHTML  = lists.pass.map(renderCard).join('')  || '<p style="color:#666;text-align:center;">None</p>';
 
-    // Upload to Google Sheets in background
-    const toast = showSavingToast('☁️ Saving to cloud...');
-    try {
-        const payload = JSON.stringify({
+    // Silent background upload to Google Sheets
+    fetch(GOOGLE_SHEET_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'text/plain' },
+        body: JSON.stringify({
             username,
             timestamp: new Date().toISOString(),
             smashed: lists.smash.map(s => toTitleCase(s.name)),
             cracked: lists.crack.map(s => toTitleCase(s.name)),
             passed:  lists.pass.map(s  => toTitleCase(s.name)),
-        });
-        // Use text/plain to avoid CORS preflight — Apps Script reads e.postData.contents
-        await fetch(GOOGLE_SHEET_URL, {
-            method: 'POST',
-            mode: 'no-cors',
-            headers: { 'Content-Type': 'text/plain' },
-            body: payload
-        });
-        toast.textContent = '✅ Saved to cloud!';
-        toast.style.borderColor = 'rgba(78,204,163,0.4)';
-    } catch (e) {
-        console.warn('Sheet upload failed:', e);
-        toast.textContent = '⚠️ Cloud save failed — but results are shown!';
-        toast.style.borderColor = 'rgba(255,215,0,0.4)';
-    }
-    setTimeout(() => { toast.style.opacity = '0'; setTimeout(() => toast.remove(), 300); }, 3500);
+        })
+    }).catch(e => console.warn('Sheet upload failed:', e));
 }
 
 // ── Keyboard Shortcuts ─────────────────────────────────────────────────────
