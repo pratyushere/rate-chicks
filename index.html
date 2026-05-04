@@ -12,6 +12,7 @@
     href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Syne:wght@700;800&display=swap"
     rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 </head>
 
 <body>
@@ -201,7 +202,19 @@
         <div class="result-list" id="listPassed"></div>
       </div>
     </div>
+    <div style="text-align: center; margin-top: 2rem;">
+      <button class="share-btn" onclick="shareAsImage()">Share Results 📸</button>
+    </div>
   </section>
+
+  <!-- Hidden Share Template for html2canvas -->
+  <div id="shareTemplate" class="share-template" style="position: absolute; left: -9999px; top: -9999px;">
+    <div class="share-card" id="shareCard">
+      <h1 class="share-title" id="shareTemplateTitle">Game Summary</h1>
+      <div class="share-grid-container" id="shareTemplateGrid"></div>
+      <div class="share-footer">Smash or Pass IX</div>
+    </div>
+  </div>
 
   <script src="app.js"></script>
 </body>

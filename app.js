@@ -447,3 +447,51 @@ document.addEventListener('keydown', e => {
     if (e.key === 'ArrowDown'  || e.key === ' ') { e.preventDefault(); loadNext(); }
     if (e.key === 'Escape') goHome();
 });
+
+// --- Share Feature ---
+async function shareAsImage() {
+    const username = sessionStorage.getItem('username') || 'Player';
+    const shareCard = document.getElementById('shareCard');
+    const templateContainer = document.getElementById('shareTemplate');
+    const templateGrid = document.getElementById('shareTemplateGrid');
+    const originalGrid = document.querySelector('.results-grid');
+    
+    // Copy content
+    document.getElementById('shareTemplateTitle').textContent = `Game Summary for ${username}`;
+    templateGrid.innerHTML = originalGrid.innerHTML;
+    
+    // Temporarily bring it into the document flow but behind everything to capture safely
+    templateContainer.style.left = '0';
+    templateContainer.style.top = '0';
+    templateContainer.style.zIndex = '-9999';
+    templateContainer.style.position = 'absolute';
+    
+    const btn = document.querySelector('.share-btn');
+    const oldText = btn.innerHTML;
+    try {
+        btn.innerHTML = "Generating... ⏳";
+        btn.disabled = true;
+
+        const canvas = await html2canvas(shareCard, {
+            useCORS: true,
+            allowTaint: true,
+            backgroundColor: '#0a0a0f',
+            scale: 2 // High quality
+        });
+        
+        const link = document.createElement('a');
+        link.download = "SmashOrPass_" + username.replace(/\s+/g, '_') + "_Summary.png";
+        link.href = canvas.toDataURL('image/png');
+        link.click();
+
+    } catch (e) {
+        console.error('Error generating image:', e);
+        alert('Could not generate the image. Please try again.');
+    } finally {
+        btn.innerHTML = oldText;
+        btn.disabled = false;
+        // Hide again
+        templateContainer.style.left = '-9999px';
+        templateContainer.style.top = '-9999px';
+    }
+}

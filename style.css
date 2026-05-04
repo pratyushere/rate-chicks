@@ -611,3 +611,57 @@ html, body {
 .btn-icon  { font-size: 1.2rem !important; display: inline-flex !important; }
 .btn-label { flex: unset !important; text-align: center !important; font-weight: 800; text-transform: uppercase; }
 .btn-count { display: none; }
+
+/* -- Share Feature -- */
+.share-btn {
+  background: linear-gradient(135deg, var(--boys-from), var(--girls-from));
+  border: none;
+  border-radius: var(--radius-md);
+  color: white;
+  padding: 0.8rem 2rem;
+  font-family: var(--font);
+  font-weight: 700;
+  font-size: 1.1rem;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(255, 255, 255, 0.1);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.share-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(255, 255, 255, 0.2);
+}
+
+.share-card {
+  width: 600px;
+  background: #0a0a0f;
+  color: #f0f0f8;
+  padding: 3rem;
+  border-radius: 20px;
+  font-family: var(--font);
+  box-sizing: border-box;
+}
+.share-title {
+  text-align: center;
+  font-family: var(--font-display);
+  font-size: 2.2rem;
+  margin-bottom: 2rem;
+  color: #fff;
+}
+.share-footer {
+  text-align: center;
+  margin-top: 3rem;
+  font-size: 1rem;
+  font-weight: 700;
+  color: rgba(255,255,255,0.4);
+  letter-spacing: 3px;
+  text-transform: uppercase;
+}
+.share-card .results-grid {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 2rem !important;
+}
+.share-card .result-column {
+  border: 1px solid rgba(255,255,255,0.1) !important;
+  background: #12121a !important;
+}
