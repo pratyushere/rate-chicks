@@ -1,5 +1,8 @@
 /* app.js — Static mode + Search + LocalStorage Hide */
 
+// ── Google Sheets Backend ─────────────────────────────────────────────────────
+const GOOGLE_SHEET_URL = 'https://script.google.com/macros/s/AKfycbyfPTgyu_tAeUqe5Cvl2N0nNQCCXldBVrhGWhBB_3Ek56dgW-xU8HDaXrs6x5ihtFNZ7A/exec';
+
 // ── Base path detection ───────────────────────────────────────────────────
 const BASE = (() => {
     const src = (document.currentScript?.src || '');
@@ -372,6 +375,48 @@ function showEmpty() {
     document.getElementById('actionButtons').style.opacity      = '0.3';
     document.getElementById('actionButtons').style.pointerEvents = 'none';
 }
+function showSavingToast(msg, isError = false) {
+    let toast = document.getElementById('cloudToast');
+    if (!toast) {
+        toast = document.createElement('div');
+        toast.id = 'cloudToast';
+        toast.style.cssText = `
+            position: fixed; bottom: 2rem; left: 50%; transform: translateX(-50%);
+            background: #1a1a26; border: 1px solid rgba(108,99,255,0.4);
+            color: #F0F0F0; padding: 0.8rem 1.6rem; border-radius: 12px;
+            font-family: var(--font); font-size: 0.9rem; font-weight: 600;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.5); z-index: 9998;
+            display: flex; align-items: center; gap: 0.6rem;
+            transition: opacity 0.3s;
+        `;
+        document.body.appendChild(toast);
+    }
+    toast.style.borderColor = isError ? 'rgba(255,77,109,0.4)' : 'rgba(108,99,255,0.4)';
+    toast.textContent = msg;
+    toast.style.opacity = '1';
+    return toast;
+}
+async function uploadGameData(username, lists) {
+    const payload = {
+        username,
+        timestamp: new Date().toISOString(),
+        smashed: lists.smash.map(s => toTitleCase(s.name)),
+        cracked: lists.crack.map(s => toTitleCase(s.name)),
+        passed:  lists.pass.map(s => toTitleCase(s.name)),
+    };
+    try {
+        await fetch(GOOGLE_SHEET_URL, {
+            method: 'POST',
+            mode: 'no-cors',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+        });
+        return true;
+    } catch (e) {
+        console.error('Sheet upload failed:', e);
+        return false;
+    }
+}
 function updateCounters() {
     document.getElementById('smashCount').textContent   = smashCount;
     const crackEl = document.getElementById('crackCount');
@@ -384,19 +429,14 @@ function toTitleCase(str) {
 }
 
 // ── Results Dashboard ──────────────────────────────────────────────────────
-function finishGame() {
+async function finishGame() {
     document.getElementById('gameScreen').classList.remove('active');
     document.getElementById('gameScreen').style.display = 'none';
-    
-    const rs = document.getElementById('resultsScreen');
-    rs.style.display = 'block';
-    
+
     const username = sessionStorage.getItem('username') || 'Player';
-    document.getElementById('resultsTitle').textContent = `Game Summary for ${username}`;
-    
     const votes = getSessionVotes();
     const lists = { smash: [], crack: [], pass: [] };
-    
+
     for (const [idStr, vote] of Object.entries(votes)) {
         const id = parseInt(idStr);
         const student = ALL_STUDENTS_RAW.find(s => s.id === id);
