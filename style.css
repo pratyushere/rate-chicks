@@ -591,3 +591,19 @@ html, body {
 }
 .welcome-start-btn:hover { opacity: 0.9; transform: scale(1.02); }
 .welcome-start-btn:active { transform: scale(0.97); }
+/* -- Modal hidden state (must always win) */
+.welcome-modal-overlay.hidden { display: none !important; }
+
+/* -- Button layout: icon + label side by side, properly spaced */
+.action-btn {
+  flex-direction: row !important;
+  gap: 8px !important;
+  padding: 14px 16px !important;
+  min-width: 110px !important;
+  font-size: 0.8rem !important;
+  letter-spacing: 1px !important;
+  justify-content: center !important;
+}
+.btn-icon  { font-size: 1.2rem !important; display: inline-flex !important; }
+.btn-label { flex: unset !important; text-align: center !important; font-weight: 800; text-transform: uppercase; }
+.btn-count { display: none; }

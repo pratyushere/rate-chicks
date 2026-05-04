@@ -42,19 +42,26 @@ window.addEventListener('DOMContentLoaded', async () => {
         document.getElementById('privacyBanner').classList.add('hidden');
     });
 
+    // Check if user already has a name saved — if yes, skip modal entirely
     const username = localStorage.getItem('username');
-    if (!username) {
-        document.getElementById('welcomeModal').style.display = 'flex';
+    const modal = document.getElementById('welcomeModal');
+    if (username) {
+        modal.classList.add('hidden');  // hide it — user already registered
     }
+    // If no username, modal is visible by default (CSS class shows it)
 
     await loadAllStudents();
 });
 
 function startApp() {
     const input = document.getElementById('usernameInput').value.trim();
-    if (!input) return;
+    if (!input) {
+        document.getElementById('usernameInput').focus();
+        document.getElementById('usernameInput').style.borderColor = 'rgba(255,77,109,0.6)';
+        return;
+    }
     localStorage.setItem('username', input);
-    document.getElementById('welcomeModal').style.display = 'none';
+    document.getElementById('welcomeModal').classList.add('hidden');
 }
 
 async function loadAllStudents() {
