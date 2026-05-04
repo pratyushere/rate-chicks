@@ -47,11 +47,15 @@ async function loadAllStudents() {
     }
 }
 
-function refreshActivePool() {
+function getVisibleStudents() {
     const hiddenIds = getHiddenIds();
-    ALL_STUDENTS = ALL_STUDENTS_RAW.filter(s =>
+    return ALL_STUDENTS_RAW.filter(s => 
         s.active !== false && !hiddenIds.includes(s.id)
     );
+}
+
+function refreshActivePool() {
+    ALL_STUDENTS = getVisibleStudents();
 }
 
 function updateHomeStats() {
@@ -63,6 +67,31 @@ function updateHomeStats() {
     document.getElementById('boysCount').textContent  = `${male} students`;
     document.getElementById('girlsCount').textContent = `${female} students`;
 }
+
+// ── Real-time Sync ────────────────────────────────────────────────────────
+window.addEventListener('storage', e => {
+    if (e.key === LS_HIDDEN) {
+        refreshActivePool();
+        updateHomeStats();
+        
+        // Refresh search if active
+        if (document.getElementById('mainSearch').value.trim()) {
+            handleMainSearch();
+        }
+        
+        // Refresh game if active
+        if (document.getElementById('gameScreen').classList.contains('active')) {
+            const hiddenIds = getHiddenIds();
+            pool = pool.filter(s => !hiddenIds.includes(s.id));
+            
+            // If current student was just hidden, move to next instantly
+            if (currentStudent && hiddenIds.includes(currentStudent.id)) {
+                loadNext();
+            }
+        }
+    }
+});
+
 
 // ── Search ────────────────────────────────────────────────────────────────
 function handleMainSearch() {
@@ -79,8 +108,8 @@ function handleMainSearch() {
     }
 
     const q = query.toLowerCase();
-    const hiddenIds = getHiddenIds();
-    const matches = ALL_STUDENTS_RAW.filter(s =>
+    const visibleStudents = getVisibleStudents();
+    const matches = visibleStudents.filter(s =>
         s.name.toLowerCase().includes(q)
     ).slice(0, 8);
 
@@ -92,12 +121,9 @@ function handleMainSearch() {
 
     results.style.display = 'block';
     results.innerHTML = matches.map(s => {
-        const isHidden = hiddenIds.includes(s.id) || s.active === false;
         const photoUrl = s.photo ? `${BASE}/data/${s.photo}` : '';
-        const statusClass = isHidden ? 'status-hidden' : 'status-available';
-        const statusText  = isHidden ? '🚫 Hidden by Admin' : '✅ Available for Vote';
 
-        return `<div class="search-result-card ${isHidden ? 'result-hidden' : ''}">
+        return `<div class="search-result-card">
           <div class="result-photo-wrap">
             ${photoUrl
               ? `<img src="${photoUrl}" alt="${s.name}" class="result-photo" />`
@@ -109,7 +135,7 @@ function handleMainSearch() {
               <span class="result-gender ${s.gender.toLowerCase()}">${s.gender}</span>
               <span class="result-id">SL#${String(s.id).padStart(5,'0')}</span>
             </div>
-            <span class="result-status ${statusClass}">${statusText}</span>
+            <span class="result-status status-available">✅ Available for Vote</span>
           </div>
         </div>`;
     }).join('');
