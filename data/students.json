@@ -697,7 +697,7 @@
     "name": "TANUSHA AGARWAL",
     "gender": "Female",
     "photo": "photos/00078_TANUSHA_AGARWAL.jpeg",
-    "active": true,
+    "active": false,
     "ocr_name": "Y",
     "ocr_match": false
   },
