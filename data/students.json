@@ -67,7 +67,7 @@
     "name": "ANUSHKA SAHA",
     "gender": "Female",
     "photo": "photos/00008_ANUSHKA_SAHA.jpeg",
-    "active": true,
+    "active": false,
     "ocr_name": null,
     "ocr_match": null
   },
@@ -103,7 +103,7 @@
     "name": "DEEKSHA MISHRA",
     "gender": "Female",
     "photo": "photos/00012_DEEKSHA_MISHRA.jpeg",
-    "active": true,
+    "active": false,
     "ocr_name": "D M",
     "ocr_match": false
   },
@@ -589,7 +589,7 @@
     "name": "SHRUTI DAS",
     "gender": "Female",
     "photo": "photos/00066_SHRUTI_DAS.jpeg",
-    "active": true,
+    "active": false,
     "ocr_name": null,
     "ocr_match": null
   },
@@ -697,7 +697,7 @@
     "name": "TANUSHA AGARWAL",
     "gender": "Female",
     "photo": "photos/00078_TANUSHA_AGARWAL.jpeg",
-    "active": false,
+    "active": true,
     "ocr_name": "Y",
     "ocr_match": false
   },
@@ -724,7 +724,7 @@
     "name": "WARSHA KUMARI",
     "gender": "Female",
     "photo": "photos/00081_WARSHA_KUMARI.jpeg",
-    "active": true,
+    "active": false,
     "ocr_name": null,
     "ocr_match": null
   },
