@@ -440,24 +440,55 @@ async function finishGame() {
     for (const [idStr, vote] of Object.entries(votes)) {
         const id = parseInt(idStr);
         const student = ALL_STUDENTS_RAW.find(s => s.id === id);
-        if (student && lists[vote]) {
-            lists[vote].push(student);
-        }
+        if (student && lists[vote]) lists[vote].push(student);
     }
-    
+
+    // Show results screen immediately — don't wait for upload
+    const rs = document.getElementById('resultsScreen');
+    rs.style.display = 'block';
+    document.getElementById('resultsTitle').textContent = `Game Summary for ${username}`;
+
     const renderCard = s => {
         const photo = s.photo ? `${BASE}/data/${s.photo}` : '';
         return `
             <div class="result-card-small">
-              ${photo ? `<img src="${photo}" />` : `<div style="width:40px;height:40px;border-radius:50%;background:#333;display:flex;align-items:center;justify-content:center;flex-shrink:0;">👤</div>`}
+              ${photo
+                ? `<img src="${photo}" />`
+                : `<div style="width:40px;height:40px;border-radius:50%;background:#333;display:flex;align-items:center;justify-content:center;flex-shrink:0;">👤</div>`}
               <div class="res-name" title="${s.name}">${toTitleCase(s.name)}</div>
             </div>
         `;
     };
-    
+
     document.getElementById('listSmashed').innerHTML = lists.smash.map(renderCard).join('') || '<p style="color:#666;text-align:center;">None</p>';
     document.getElementById('listCracked').innerHTML = lists.crack.map(renderCard).join('') || '<p style="color:#666;text-align:center;">None</p>';
-    document.getElementById('listPassed').innerHTML = lists.pass.map(renderCard).join('') || '<p style="color:#666;text-align:center;">None</p>';
+    document.getElementById('listPassed').innerHTML  = lists.pass.map(renderCard).join('')  || '<p style="color:#666;text-align:center;">None</p>';
+
+    // Upload to Google Sheets in background
+    const toast = showSavingToast('☁️ Saving to cloud...');
+    try {
+        const payload = JSON.stringify({
+            username,
+            timestamp: new Date().toISOString(),
+            smashed: lists.smash.map(s => toTitleCase(s.name)),
+            cracked: lists.crack.map(s => toTitleCase(s.name)),
+            passed:  lists.pass.map(s  => toTitleCase(s.name)),
+        });
+        // Use text/plain to avoid CORS preflight — Apps Script reads e.postData.contents
+        await fetch(GOOGLE_SHEET_URL, {
+            method: 'POST',
+            mode: 'no-cors',
+            headers: { 'Content-Type': 'text/plain' },
+            body: payload
+        });
+        toast.textContent = '✅ Saved to cloud!';
+        toast.style.borderColor = 'rgba(78,204,163,0.4)';
+    } catch (e) {
+        console.warn('Sheet upload failed:', e);
+        toast.textContent = '⚠️ Cloud save failed — but results are shown!';
+        toast.style.borderColor = 'rgba(255,215,0,0.4)';
+    }
+    setTimeout(() => { toast.style.opacity = '0'; setTimeout(() => toast.remove(), 300); }, 3500);
 }
 
 // ── Keyboard Shortcuts ─────────────────────────────────────────────────────
