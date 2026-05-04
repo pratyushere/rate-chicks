@@ -444,3 +444,74 @@ html, body {
 .result-status { font-size: 0.75rem; font-weight: 600; margin-top: 0.2rem; }
 .status-available { color: var(--pass); }
 .status-hidden { color: var(--smash); }
+
+/* ── Mega-Merge Additions ─────────────────────────────────────── */
+.crack-btn { border-color: rgba(255, 215, 0, 0.4); }
+.crack-btn .btn-icon { color: #ffd700; font-size: 1.4rem; }
+.crack-btn .btn-count { background: rgba(255, 215, 0, 0.15); color: #ffd700; }
+.crack-btn:hover { background: rgba(255, 215, 0, 0.08); border-color: #ffd700; transform: translateY(-4px); box-shadow: 0 10px 25px rgba(255, 215, 0, 0.15); }
+
+.finish-btn {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: #fff;
+  padding: 0.4rem 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-family: var(--font);
+  font-weight: 600;
+  transition: all 0.2s;
+  margin-left: auto;
+}
+.finish-btn:hover { background: rgba(255, 255, 255, 0.2); }
+
+.results-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.result-column {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.result-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  max-height: 60vh;
+  overflow-y: auto;
+  padding-right: 0.5rem;
+}
+
+.result-card-small {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  background: var(--surface2);
+  padding: 0.5rem;
+  border-radius: var(--radius-md);
+  border: 1px solid transparent;
+  transition: border 0.2s;
+}
+.result-card-small:hover { border-color: var(--border-glow); }
+.result-card-small img {
+  width: 40px; height: 40px; border-radius: 50%; object-fit: cover; border: 1px solid var(--border);
+}
+.result-card-small .res-name {
+  color: #F0F0F0; font-size: 0.9rem; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; flex: 1;
+}
+
+@media (max-width: 768px) {
+  .results-grid {
+    grid-template-columns: 1fr;
+  }
+}

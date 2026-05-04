@@ -10,6 +10,7 @@ const BASE = (() => {
 // ── LocalStorage helpers ──────────────────────────────────────────────────
 const LS_HIDDEN = 'sop_hidden_ids';
 const LS_EDITS  = 'student_edits';
+const LS_VOTES  = 'sessionVotes';
 
 function getHiddenIds() {
     try { return JSON.parse(localStorage.getItem(LS_HIDDEN) || '[]'); }
@@ -18,6 +19,15 @@ function getHiddenIds() {
 function getStudentEdits() {
     try { return JSON.parse(localStorage.getItem(LS_EDITS) || '{}'); }
     catch { return {}; }
+}
+function getSessionVotes() {
+    try { return JSON.parse(localStorage.getItem(LS_VOTES) || '{}'); }
+    catch { return {}; }
+}
+function saveSessionVote(id, vote) {
+    const votes = getSessionVotes();
+    votes[id] = vote;
+    localStorage.setItem(LS_VOTES, JSON.stringify(votes));
 }
 
 // ── Student store ─────────────────────────────────────────────────────────
@@ -31,8 +41,21 @@ window.addEventListener('DOMContentLoaded', async () => {
     document.getElementById('dismissBanner').addEventListener('click', () => {
         document.getElementById('privacyBanner').classList.add('hidden');
     });
+
+    const username = localStorage.getItem('username');
+    if (!username) {
+        document.getElementById('welcomeModal').style.display = 'flex';
+    }
+
     await loadAllStudents();
 });
+
+function startApp() {
+    const input = document.getElementById('usernameInput').value.trim();
+    if (!input) return;
+    localStorage.setItem('username', input);
+    document.getElementById('welcomeModal').style.display = 'none';
+}
 
 async function loadAllStudents() {
     try {
@@ -195,6 +218,7 @@ let pool           = [];
 let shownIds       = [];
 let smashCount     = 0;
 let passCount      = 0;
+let crackCount     = 0;
 let sessionRated   = 0;
 let isAnimating    = false;
 
@@ -202,14 +226,15 @@ let isAnimating    = false;
 function selectTrack(gender) {
     if (!loaded) return;
     currentGender = gender;
-    smashCount = 0; passCount = 0; sessionRated = 0; shownIds = [];
+    smashCount = 0; passCount = 0; crackCount = 0; sessionRated = 0; shownIds = [];
     updateCounters();
 
     // Refresh pool in case admin changed hidden list
     refreshActivePool();
 
+    const votes = getSessionVotes();
     pool = ALL_STUDENTS
-        .filter(s => s.gender === gender)
+        .filter(s => s.gender === gender && !votes[s.id])
         .sort(() => Math.random() - 0.5);
 
     document.getElementById('trackScreen').classList.remove('active');
@@ -227,6 +252,7 @@ function selectTrack(gender) {
 function goHome() {
     document.getElementById('gameScreen').classList.remove('active');
     document.getElementById('gameScreen').style.display = 'none';
+    document.getElementById('resultsScreen').style.display = 'none';
     document.getElementById('trackScreen').classList.add('active');
     refreshActivePool();
     updateHomeStats();
@@ -234,7 +260,10 @@ function goHome() {
 
 function resetAndRestart() {
     shownIds = [];
-    pool = pool.sort(() => Math.random() - 0.5);
+    const votes = getSessionVotes();
+    pool = ALL_STUDENTS
+        .filter(s => s.gender === currentGender && !votes[s.id])
+        .sort(() => Math.random() - 0.5);
     loadNext();
 }
 
@@ -294,11 +323,16 @@ function handleVote(type) {
     const overlay = document.getElementById('voteOverlay');
 
     if (type === 'smash') smashCount++;
+    else if (type === 'crack') crackCount++;
     else                  passCount++;
     sessionRated++;
+    
+    saveSessionVote(currentStudent.id, type);
     updateCounters();
 
-    card.classList.add(type === 'smash' ? 'swipe-right' : 'swipe-left');
+    if (type === 'crack') card.classList.add('fade-up');
+    else card.classList.add(type === 'smash' ? 'swipe-right' : 'swipe-left');
+    
     overlay.className = `vote-overlay flash-${type}`;
     setTimeout(() => { overlay.className = 'vote-overlay'; }, 400);
 
@@ -333,6 +367,8 @@ function showEmpty() {
 }
 function updateCounters() {
     document.getElementById('smashCount').textContent   = smashCount;
+    const crackEl = document.getElementById('crackCount');
+    if (crackEl) crackEl.textContent = crackCount;
     document.getElementById('passCount').textContent    = passCount;
     document.getElementById('sessionCount').textContent = sessionRated;
 }
@@ -340,11 +376,49 @@ function toTitleCase(str) {
     return (str || '').toLowerCase().replace(/\b\w/g, c => c.toUpperCase());
 }
 
+// ── Results Dashboard ──────────────────────────────────────────────────────
+function finishGame() {
+    document.getElementById('gameScreen').classList.remove('active');
+    document.getElementById('gameScreen').style.display = 'none';
+    
+    const rs = document.getElementById('resultsScreen');
+    rs.style.display = 'block';
+    
+    const username = localStorage.getItem('username') || 'Player';
+    document.getElementById('resultsTitle').textContent = `Game Summary for ${username}`;
+    
+    const votes = getSessionVotes();
+    const lists = { smash: [], crack: [], pass: [] };
+    
+    for (const [idStr, vote] of Object.entries(votes)) {
+        const id = parseInt(idStr);
+        const student = ALL_STUDENTS_RAW.find(s => s.id === id);
+        if (student && lists[vote]) {
+            lists[vote].push(student);
+        }
+    }
+    
+    const renderCard = s => {
+        const photo = s.photo ? `${BASE}/data/${s.photo}` : '';
+        return `
+            <div class="result-card-small">
+              ${photo ? `<img src="${photo}" />` : `<div style="width:40px;height:40px;border-radius:50%;background:#333;display:flex;align-items:center;justify-content:center;flex-shrink:0;">👤</div>`}
+              <div class="res-name" title="${s.name}">${toTitleCase(s.name)}</div>
+            </div>
+        `;
+    };
+    
+    document.getElementById('listSmashed').innerHTML = lists.smash.map(renderCard).join('') || '<p style="color:#666;text-align:center;">None</p>';
+    document.getElementById('listCracked').innerHTML = lists.crack.map(renderCard).join('') || '<p style="color:#666;text-align:center;">None</p>';
+    document.getElementById('listPassed').innerHTML = lists.pass.map(renderCard).join('') || '<p style="color:#666;text-align:center;">None</p>';
+}
+
 // ── Keyboard Shortcuts ─────────────────────────────────────────────────────
 document.addEventListener('keydown', e => {
     if (!document.getElementById('gameScreen').classList.contains('active')) return;
     if (e.key === 'ArrowRight' || e.key === 's') handleVote('smash');
     if (e.key === 'ArrowLeft'  || e.key === 'p') handleVote('pass');
+    if (e.key === 'ArrowUp'    || e.key === 'c') handleVote('crack');
     if (e.key === 'ArrowDown'  || e.key === ' ') { e.preventDefault(); loadNext(); }
     if (e.key === 'Escape') goHome();
 });

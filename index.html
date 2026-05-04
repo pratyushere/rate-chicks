@@ -15,6 +15,18 @@
 </head>
 
 <body>
+  <!-- Welcome Modal -->
+  <div class="modal-overlay" id="welcomeModal" style="display:none; z-index:9999; backdrop-filter: blur(10px);">
+    <div class="modal-box" style="background: #1a1a26; border: 1px solid rgba(255,255,255,0.15);">
+      <h3 class="modal-title" style="color: #F0F0F0;">Welcome to Smash or Pass</h3>
+      <p class="modal-sub" style="color: rgba(240,240,240,0.7);">Please enter your name to start.</p>
+      <input type="text" id="usernameInput" class="modal-input" placeholder="Your Name..." style="background: #0a0a0f; color: #F0F0F0; border: 1px solid rgba(255,255,255,0.2);" />
+      <div class="modal-actions" style="margin-top: 1.5rem;">
+        <button class="modal-btn-save" onclick="startApp()" style="background: #4ecca3; color: #000; width: 100%;">Start</button>
+      </div>
+    </div>
+  </div>
+
   <!-- Privacy Notice Banner -->
   <div id="privacyBanner">
     <span class="banner-icon">🔒</span>
@@ -101,6 +113,7 @@
       <div class="session-counter">
         <span id="sessionCount">0</span> rated
       </div>
+      <button class="finish-btn" onclick="finishGame()">Finish</button>
     </header>
 
     <main class="game-main">
@@ -141,9 +154,11 @@
           <span class="btn-label">PASS</span>
           <span class="btn-count" id="passCount">0</span>
         </button>
-        <div class="btn-middle">
-          <button class="skip-btn" onclick="loadNext()" title="Skip">↷</button>
-        </div>
+        <button class="action-btn crack-btn" id="crackBtn" onclick="handleVote('crack')" aria-label="Crack">
+          <span class="btn-icon">🔥</span>
+          <span class="btn-label">CRACK</span>
+          <span class="btn-count" id="crackCount">0</span>
+        </button>
         <button class="action-btn smash-btn" id="smashBtn" onclick="handleVote('smash')" aria-label="Smash">
           <span class="btn-count" id="smashCount">0</span>
           <span class="btn-label">SMASH</span>
@@ -154,6 +169,28 @@
 
     <!-- Vote feedback overlay -->
     <div class="vote-overlay" id="voteOverlay"></div>
+  </section>
+
+  <!-- SCREEN 3: Results Dashboard -->
+  <section id="resultsScreen" class="screen" style="display:none; padding: 4rem 1rem 2rem 1rem;">
+    <header class="results-header" style="text-align: center; margin-bottom: 3rem;">
+      <h1 style="color: #F0F0F0; font-family: 'Syne', sans-serif; font-size: 2.5rem; margin-bottom: 0.5rem;" id="resultsTitle">Game Summary</h1>
+      <button class="back-btn" onclick="goHome()" style="background: rgba(255,255,255,0.1); border: none; padding: 0.5rem 1rem; border-radius: 8px; color: #fff; cursor: pointer;">← Back to Home</button>
+    </header>
+    <div class="results-grid">
+      <div class="result-column" id="colSmashed">
+        <h2 style="color: #ff4b72; text-align: center; border-bottom: 2px solid rgba(255,75,114,0.3); padding-bottom: 1rem; margin-bottom: 1.5rem;">Smashed</h2>
+        <div class="result-list" id="listSmashed"></div>
+      </div>
+      <div class="result-column" id="colCracked">
+        <h2 style="color: #ffd700; text-align: center; border-bottom: 2px solid rgba(255,215,0,0.3); padding-bottom: 1rem; margin-bottom: 1.5rem;">Cracked</h2>
+        <div class="result-list" id="listCracked"></div>
+      </div>
+      <div class="result-column" id="colPassed">
+        <h2 style="color: #7a829e; text-align: center; border-bottom: 2px solid rgba(122,130,158,0.3); padding-bottom: 1rem; margin-bottom: 1.5rem;">Passed</h2>
+        <div class="result-list" id="listPassed"></div>
+      </div>
+    </div>
   </section>
 
   <script src="app.js"></script>
