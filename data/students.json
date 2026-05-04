@@ -337,7 +337,7 @@
     "name": "NEHAL AGARWAL",
     "gender": "Female",
     "photo": "photos/00038_NEHAL_AGARWAL.jpeg",
-    "active": true,
+    "active": false,
     "ocr_name": "I",
     "ocr_match": false
   },
@@ -697,7 +697,7 @@
     "name": "TANUSHA AGARWAL",
     "gender": "Female",
     "photo": "photos/00078_TANUSHA_AGARWAL.jpeg",
-    "active": true,
+    "active": false,
     "ocr_name": "Y",
     "ocr_match": false
   },
@@ -706,7 +706,7 @@
     "name": "TEJASWANI IRA",
     "gender": "Female",
     "photo": "photos/00079_TEJASWANI_IRA.jpeg",
-    "active": true,
+    "active": false,
     "ocr_name": null,
     "ocr_match": null
   },
