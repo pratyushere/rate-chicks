@@ -42,13 +42,13 @@ window.addEventListener('DOMContentLoaded', async () => {
         document.getElementById('privacyBanner').classList.add('hidden');
     });
 
-    // Check if user already has a name saved — if yes, skip modal entirely
-    const username = localStorage.getItem('username');
+    // Check if user already entered name THIS session (clears on refresh)
+    const username = sessionStorage.getItem('username');
     const modal = document.getElementById('welcomeModal');
     if (username) {
-        modal.classList.add('hidden');  // hide it — user already registered
+        modal.classList.add('hidden');  // same session, skip modal
     }
-    // If no username, modal is visible by default (CSS class shows it)
+    // No username in session = show modal on every fresh load
 
     await loadAllStudents();
 });
@@ -60,7 +60,7 @@ function startApp() {
         document.getElementById('usernameInput').style.borderColor = 'rgba(255,77,109,0.6)';
         return;
     }
-    localStorage.setItem('username', input);
+    sessionStorage.setItem('username', input);
     document.getElementById('welcomeModal').classList.add('hidden');
 }
 
