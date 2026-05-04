@@ -21,13 +21,13 @@ function getStudentEdits() {
     catch { return {}; }
 }
 function getSessionVotes() {
-    try { return JSON.parse(localStorage.getItem(LS_VOTES) || '{}'); }
+    try { return JSON.parse(sessionStorage.getItem(LS_VOTES) || '{}'); }
     catch { return {}; }
 }
 function saveSessionVote(id, vote) {
     const votes = getSessionVotes();
     votes[id] = vote;
-    localStorage.setItem(LS_VOTES, JSON.stringify(votes));
+    sessionStorage.setItem(LS_VOTES, JSON.stringify(votes));
 }
 
 // ── Student store ─────────────────────────────────────────────────────────
